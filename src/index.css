@@ -1,108 +1,103 @@
 @import "tailwindcss";
 @custom-variant dark (&:is(.dark *));
 
-/* ── Tokens de color por modo ────────────────────────────────
-   Modo oscuro: variables en :root (default)
-   Modo claro:  se sobreescriben en .dark → NO, al revés:
-   El Navbar pone clase "dark" en <html> para oscuro.
-   Sin clase = claro (default del sistema).
-
-   Estrategia:
-   - :root         = modo CLARO (default sin clase)
-   - .dark          = modo OSCURO (cuando Navbar agrega la clase)
-──────────────────────────────────────────────────────────────── */
-
 :root {
-  /* Fondos */
-  --bg-base:       #f5f0e8;   /* fondo principal */
-  --bg-surface:    #ffffff;   /* tarjetas */
-  --bg-elevated:   #ede8de;   /* elementos elevados, studs */
-  --bg-hero:       #f5f0e8;   /* fondo del hero */
+  color-scheme: light;
 
-  /* Bordes */
-  --border:        #e0d5c0;
-  --border-subtle: #d4c9b0;
+  --bg-base: #f4efe6;
+  --bg-soft: #fbf8f2;
+  --bg-surface: rgba(255, 255, 255, 0.8);
+  --bg-surface-strong: #ffffff;
+  --bg-elevated: #ede5d8;
+  --bg-hero: #f4efe6;
+  --bg-section-tint: rgba(232, 168, 56, 0.06);
+  --bg-glass: rgba(255, 255, 255, 0.72);
 
-  /* Texto */
-  --text-primary:  #1a1200;
-  --text-muted:    #6b5c3e;
-  --text-subtle:   #9c8a6e;
+  --border: rgba(97, 73, 35, 0.16);
+  --border-strong: rgba(97, 73, 35, 0.28);
+  --border-subtle: rgba(97, 73, 35, 0.1);
 
-  /* Patrón de studs en el hero */
-  --stud-dot-1:    rgba(0, 0, 0, 0.07);
-  --stud-dot-2:    rgba(0, 0, 0, 0.035);
+  --text-primary: #1a1200;
+  --text-muted: #66583d;
+  --text-subtle: #8f7f62;
 
-  /* Gradiente overlay del hero */
-  --hero-overlay-1: rgba(245, 240, 232, 0.65);
-  --hero-overlay-2: rgba(245, 240, 232, 0.8);
-  --hero-overlay-3: rgba(245, 240, 232, 0.9);
+  --accent: #e8a838;
+  --accent-strong: #8a5e00;
+  --accent-soft: rgba(232, 168, 56, 0.14);
+  --accent-blue: #2980b9;
+  --accent-green: #27ae60;
 
-  /* Scroll bar */
-  --scroll-track:  #c4b89a;
+  --stud-dot-1: rgba(44, 37, 24, 0.06);
+  --stud-dot-2: rgba(44, 37, 24, 0.03);
+  --hero-overlay-1: rgba(244, 239, 230, 0.3);
+  --hero-overlay-2: rgba(244, 239, 230, 0.72);
+  --hero-overlay-3: rgba(244, 239, 230, 0.94);
 
-  /* Stud box-shadow */
-  --stud-shadow:   inset 0 -2px 4px rgba(0,0,0,0.15), 0 1px 0 rgba(0,0,0,0.05);
+  --section-glow: radial-gradient(circle at top left, rgba(232, 168, 56, 0.12), transparent 42%);
+  --card-shadow: 0 16px 45px rgba(54, 37, 5, 0.08);
+  --card-shadow-hover: 0 22px 55px rgba(54, 37, 5, 0.14);
+  --stud-shadow: inset 0 -2px 4px rgba(0, 0, 0, 0.15), 0 1px 0 rgba(255, 255, 255, 0.45);
+  --social-bg: rgba(255, 255, 255, 0.8);
+  --social-shadow: 0 8px 18px rgba(54, 37, 5, 0.1);
+  --scroll-track: #d7c8ac;
 
-  /* Social link */
-  --social-bg:     #ede8de;
-  --social-shadow: 0 3px 0 rgba(0,0,0,0.12);
-
-  /* Caja LEGO avatar */
-  --lego-box-bg:   linear-gradient(145deg, #ffffff, #f0ebe0);
-  --lego-box-shadow: 0 0 0 1px rgba(0,0,0,0.06), 0 20px 60px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.8);
-  --lego-window-bg: radial-gradient(ellipse at center, #f0ebe0 0%, #e8e0d0 100%);
-  --lego-footer-bg: #ede8de;
+  --lego-box-bg: linear-gradient(145deg, #ffffff, #efe7da);
+  --lego-box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06), 0 26px 70px rgba(54, 37, 5, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  --lego-window-bg: radial-gradient(ellipse at center, #f7f2e8 0%, #ece2d1 100%);
+  --lego-footer-bg: #efe7da;
 }
 
 .dark {
-  /* Fondos */
-  --bg-base:       #0d1117;
-  --bg-surface:    #161b22;
-  --bg-elevated:   #21262d;
-  --bg-hero:       #0d1117;
+  color-scheme: dark;
 
-  /* Bordes */
-  --border:        rgba(255, 255, 255, 0.08);
+  --bg-base: #0d1117;
+  --bg-soft: #11161d;
+  --bg-surface: rgba(22, 27, 34, 0.86);
+  --bg-surface-strong: #161b22;
+  --bg-elevated: #21262d;
+  --bg-hero: #0d1117;
+  --bg-section-tint: rgba(232, 168, 56, 0.07);
+  --bg-glass: rgba(13, 17, 23, 0.74);
+
+  --border: rgba(255, 255, 255, 0.09);
+  --border-strong: rgba(255, 255, 255, 0.15);
   --border-subtle: rgba(255, 255, 255, 0.05);
 
-  /* Texto */
-  --text-primary:  #e8e8e8;
-  --text-muted:    #8b949e;
-  --text-subtle:   #484f58;
+  --text-primary: #edf2f7;
+  --text-muted: #9da7b3;
+  --text-subtle: #59636f;
 
-  /* Patrón de studs */
-  --stud-dot-1:    rgba(255, 255, 255, 0.06);
-  --stud-dot-2:    rgba(255, 255, 255, 0.025);
+  --accent: #e8a838;
+  --accent-strong: #8a5e00;
+  --accent-soft: rgba(232, 168, 56, 0.12);
+  --accent-blue: #57a4d8;
+  --accent-green: #30c06f;
 
-  /* Gradiente overlay del hero */
-  --hero-overlay-1: rgba(13, 17, 23, 0.65);
-  --hero-overlay-2: rgba(13, 17, 23, 0.8);
-  --hero-overlay-3: rgba(13, 17, 23, 0.9);
+  --stud-dot-1: rgba(255, 255, 255, 0.05);
+  --stud-dot-2: rgba(255, 255, 255, 0.024);
+  --hero-overlay-1: rgba(13, 17, 23, 0.22);
+  --hero-overlay-2: rgba(13, 17, 23, 0.72);
+  --hero-overlay-3: rgba(13, 17, 23, 0.96);
 
-  /* Scroll bar */
-  --scroll-track:  #484f58;
+  --section-glow: radial-gradient(circle at top left, rgba(232, 168, 56, 0.08), transparent 38%);
+  --card-shadow: 0 18px 48px rgba(0, 0, 0, 0.35);
+  --card-shadow-hover: 0 24px 60px rgba(0, 0, 0, 0.48);
+  --stud-shadow: inset 0 -2px 4px rgba(0, 0, 0, 0.45), 0 1px 0 rgba(255, 255, 255, 0.05);
+  --social-bg: rgba(33, 38, 45, 0.9);
+  --social-shadow: 0 10px 26px rgba(0, 0, 0, 0.35);
+  --scroll-track: #484f58;
 
-  /* Stud box-shadow */
-  --stud-shadow:   inset 0 -2px 4px rgba(0,0,0,0.45), 0 1px 0 rgba(255,255,255,0.04);
-
-  /* Social link */
-  --social-bg:     #21262d;
-  --social-shadow: 0 3px 0 rgba(0,0,0,0.4);
-
-  /* Caja LEGO avatar */
-  --lego-box-bg:   linear-gradient(145deg, #1c1f24, #13161a);
-  --lego-box-shadow: 0 0 0 1px rgba(255,255,255,0.04), 0 20px 60px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.06);
+  --lego-box-bg: linear-gradient(145deg, #1c1f24, #13161a);
+  --lego-box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.04), 0 20px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.06);
   --lego-window-bg: radial-gradient(ellipse at center, #1e2028 0%, #13161a 100%);
   --lego-footer-bg: #21262d;
 }
 
-/* ── Transición suave al cambiar de modo ─────────────────────── */
 *, *::before, *::after {
-  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.2s ease;
   box-sizing: border-box;
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.2s ease, box-shadow 0.25s ease;
 }
 
-/* Excepciones: no animar lo que tiene transiciones propias */
 img, svg, [style*="animation"] {
   transition: none;
 }
@@ -113,49 +108,113 @@ html {
 
 body {
   margin: 0;
-  padding: 0;
-  background-color: var(--bg-base);
+  min-width: 320px;
+  background:
+    radial-gradient(circle at top left, rgba(232, 168, 56, 0.08), transparent 28%),
+    linear-gradient(to bottom, var(--bg-soft), var(--bg-base));
+  color: var(--text-primary);
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: radial-gradient(circle, var(--stud-dot-1) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), transparent 78%);
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+}
+
+::selection {
+  background: rgba(232, 168, 56, 0.26);
   color: var(--text-primary);
 }
 
-/* ── Keyframes del Hero ──────────────────────────────────────── */
-@keyframes hero-blink {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0; }
+.section-shell {
+  position: relative;
+  overflow: hidden;
 }
-@keyframes hero-pulse-dot {
-  0%, 100% { opacity: 1;    transform: scale(1);   }
-  50%       { opacity: 0.55; transform: scale(0.8); }
+
+.section-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: var(--section-glow);
+  opacity: 1;
 }
-@keyframes hero-fade-up {
-  from { opacity: 0; transform: translateY(24px); }
-  to   { opacity: 1; transform: translateY(0);    }
+
+.section-panel {
+  position: relative;
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, var(--bg-glass), var(--bg-surface));
+  backdrop-filter: blur(12px);
+  box-shadow: var(--card-shadow);
 }
-@keyframes hero-float-tl {
-  0%, 100% { transform: translateY(0px)  rotate(-15deg); }
-  50%       { transform: translateY(-8px) rotate(-12deg); }
+
+.section-label {
+  color: var(--accent);
 }
-@keyframes hero-float-tr {
-  0%, 100% { transform: translateY(0px)  rotate(12deg); }
-  50%       { transform: translateY(-8px) rotate(15deg); }
+
+.section-divider {
+  background: linear-gradient(to right, var(--accent), transparent);
 }
-@keyframes hero-float-bl {
-  0%, 100% { transform: translateY(0px)  rotate(8deg);  }
-  50%       { transform: translateY(-8px) rotate(11deg); }
-}
-@keyframes hero-float-br {
-  0%, 100% { transform: translateY(0px)  rotate(-10deg); }
-  50%       { transform: translateY(-8px) rotate(-7deg);  }
-}
-@keyframes hero-scroll-fill {
-  0%   { transform: translateY(-100%); opacity: 1; }
-  80%  { transform: translateY(300%);  opacity: 1; }
-  81%  { opacity: 0; }
-  82%  { transform: translateY(-100%); }
-  83%  { opacity: 1; }
-  100% { transform: translateY(-100%); opacity: 1; }
+
+.section-kicker {
+  color: var(--text-muted);
 }
 
 .hero-studs-bg {
   transition: transform 0.12s ease-out !important;
+}
+
+@keyframes hero-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes hero-pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.55; transform: scale(0.8); }
+}
+
+@keyframes hero-fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes hero-float-tl {
+  0%, 100% { transform: translateY(0) rotate(-15deg); }
+  50% { transform: translateY(-8px) rotate(-12deg); }
+}
+
+@keyframes hero-float-tr {
+  0%, 100% { transform: translateY(0) rotate(12deg); }
+  50% { transform: translateY(-8px) rotate(15deg); }
+}
+
+@keyframes hero-float-bl {
+  0%, 100% { transform: translateY(0) rotate(8deg); }
+  50% { transform: translateY(-8px) rotate(11deg); }
+}
+
+@keyframes hero-float-br {
+  0%, 100% { transform: translateY(0) rotate(-10deg); }
+  50% { transform: translateY(-8px) rotate(-7deg); }
+}
+
+@keyframes hero-scroll-fill {
+  0% { transform: translateY(-100%); opacity: 1; }
+  80% { transform: translateY(300%); opacity: 1; }
+  81% { opacity: 0; }
+  82% { transform: translateY(-100%); }
+  83% { opacity: 1; }
+  100% { transform: translateY(-100%); opacity: 1; }
 }

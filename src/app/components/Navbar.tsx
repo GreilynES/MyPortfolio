@@ -4,7 +4,7 @@ import { SECTION_IDS } from "../../shared/lib/sectionIds";
 
 const NAV_ITEMS = [
   { label: "Inicio",      href: `#${SECTION_IDS.hero}` },
-  { label: "Educación",   href: `#${SECTION_IDS.education}` },
+  { label: "Sobre mí",   href: `#${SECTION_IDS.education}` },
   { label: "Experiencia", href: `#${SECTION_IDS.experience}` },
   { label: "Habilidades", href: `#${SECTION_IDS.skills}` },
   { label: "Idiomas",     href: `#${SECTION_IDS.languages}` },

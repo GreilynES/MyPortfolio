@@ -1,141 +1,143 @@
 
-import { useState } from "react";
 import SectionLayout from "../../../../shared/components/layout/SectionLayout";
 import { education } from "../../data/education";
 
 /* ── Ícono graduación ─────────────────────────────────────────── */
 function IconGrad() {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}
-      className="w-5 h-5" aria-hidden="true">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.8}
+      className="h-5 w-5"
+      aria-hidden="true"
+    >
       <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
       <path d="M6 12v5c3 3 9 3 12 0v-5" />
     </svg>
   );
 }
 
-/* ── Ícono chevron ────────────────────────────────────────────── */
-function IconChevron({ open }: { open: boolean }) {
+
+function LegoStud({ size = 10 }: { size?: number }) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}
-      className={`w-4 h-4 transition-transform duration-300 ${open ? "rotate-180" : ""}`}
-      aria-hidden="true">
-      <polyline points="6 9 12 15 18 9" />
-    </svg>
+    <span
+      aria-hidden="true"
+      className="rounded-full"
+      style={{
+        width: size,
+        height: size,
+        background: "var(--bg-elevated)",
+        border: "1px solid var(--border)",
+        boxShadow: "var(--stud-shadow)",
+      }}
+    />
   );
 }
 
-/* ── Componente de entrada de educación ──────────────────────── */
+/* ── Card educación minimalista ───────────────────────────────── */
 function EducationCard({
   institution,
   program,
   startDate,
   endDate,
-  notes,
   index,
 }: {
   institution: string;
   program: string;
   startDate?: string;
   endDate?: string;
-  notes?: string[];
   index: number;
 }) {
-  const [open, setOpen] = useState(true);
 
-  /* Colores alternos para los bloques — paleta LEGO oscura */
-  const blockColors = ["#a93226", "#1a5276", "#1e8449", "#b7950b", "#6c3483"];
-  const color = blockColors[index % blockColors.length];
+  const accentColors = ["#e8a838", "#57a4d8", "#30c06f", "#c084fc"];
+  const accent = accentColors[index % accentColors.length];
 
   return (
-    <div className="relative flex gap-6 md:gap-10">
-
-      {/* ── Columna izquierda: studs + línea ── */}
-      <div className="flex flex-col items-center flex-shrink-0 w-10">
-        {/* Bloque con studs — el "nodo" del timeline */}
-        <div className="relative flex flex-col items-center">
-          {/* Studs encima del nodo */}
-          <div className="flex gap-[4px] mb-[-2px]" aria-hidden="true">
-            <span className="w-[10px] h-[10px] rounded-full"
-              style={{ background: color, boxShadow: `inset 0 -2px 0 rgba(0,0,0,0.3), 0 0 6px ${color}80` }} />
-            <span className="w-[10px] h-[10px] rounded-full"
-              style={{ background: color, boxShadow: `inset 0 -2px 0 rgba(0,0,0,0.3), 0 0 6px ${color}80` }} />
-          </div>
-          {/* Nodo cuadrado */}
-          <div className="w-10 h-10 rounded flex items-center justify-center text-white z-10 relative"
-            style={{
-              background: color,
-              boxShadow: `0 4px 0 rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2)`,
-            }}>
-            <IconGrad />
-          </div>
-        </div>
-        {/* Línea punteada hacia abajo */}
-        <div className="flex-1 w-[2px] mt-2 mb-0 min-h-[40px]"
-          style={{
-            background: `repeating-linear-gradient(to bottom, ${color}60 0px, ${color}60 6px, transparent 6px, transparent 12px)`,
-          }} />
-      </div>
-
-      {/* ── Columna derecha: contenido ── */}
-      <div className="flex-1 pb-10">
-        {/* Fecha badge */}
-        <span className="inline-flex items-center gap-1 font-mono text-[0.68rem] tracking-[0.06em] uppercase px-2 py-[3px] rounded mb-3"
-          style={{
-            background: `${color}20`,
-            color: color,
-            border: `1px solid ${color}40`,
-          }}>
-          {startDate ?? "?"} — {endDate ?? "Actualidad"}
-        </span>
-
-        {/* Tarjeta principal */}
-        <div className="rounded-xl overflow-hidden"
-          style={{
-            background: "var(--bg-surface)",
-            border: "1px solid var(--border)",
-            boxShadow: "0 4px 0 rgba(0,0,0,0.15)",
-          }}>
-          {/* Header clicable */}
-          <button
-            onClick={() => setOpen((o) => !o)}
-            className="w-full flex items-center justify-between px-5 py-4 text-left gap-3"
-            style={{ borderBottom: open ? "1px solid var(--border)" : "none" }}
-            aria-expanded={open}>
-            <div className="flex flex-col gap-0.5 min-w-0">
-              <span className="font-mono text-[0.7rem] tracking-[0.06em] uppercase truncate"
-                style={{ color: "var(--text-muted)" }}>
-                {institution}
-              </span>
-              <span className="font-serif font-bold text-[1.05rem] leading-snug"
-                style={{ color: "var(--text-primary)" }}>
-                {program}
-              </span>
+    <article
+      className="overflow-hidden rounded-[24px]"
+      style={{
+        background:
+          "linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015))",
+        border: "1px solid var(--border)",
+        boxShadow: "var(--card-shadow)",
+      }}
+    >
+        <div
+          className="flex w-full items-start justify-between gap-4 px-5 py-5 text-left sm:px-6"
+        >
+        <div className="min-w-0">
+          <div className="mb-4 flex items-center gap-3">
+            <div
+              className="flex h-10 w-10 items-center justify-center rounded-xl"
+              style={{
+                background: `linear-gradient(180deg, ${accent}22, ${accent}12)`,
+                border: `1px solid ${accent}40`,
+                color: accent,
+                boxShadow:
+                  "0 10px 24px rgba(0,0,0,0.14), inset 0 1px 0 rgba(255,255,255,0.05)",
+              }}
+            >
+              <IconGrad />
             </div>
-            <span style={{ color: "var(--text-muted)", flexShrink: 0 }}>
-              <IconChevron open={open} />
-            </span>
-          </button>
 
-          {/* Notas desplegables */}
-          <div className={`overflow-hidden transition-all duration-400 ease-in-out ${open ? "max-h-[400px] opacity-100" : "max-h-0 opacity-0"}`}>
-            {notes && notes.length > 0 && (
-              <ul className="px-5 py-4 flex flex-col gap-2 list-none m-0">
-                {notes.map((note, i) => (
-                  <li key={i} className="flex items-start gap-3 text-[0.875rem] leading-relaxed"
-                    style={{ color: "var(--text-muted)" }}>
-                    {/* Bullet ladrillo */}
-                    <span className="mt-[5px] w-[6px] h-[6px] rounded-sm flex-shrink-0"
-                      style={{ background: color }} aria-hidden="true" />
-                    {note}
-                  </li>
-                ))}
-              </ul>
-            )}
+            <div className="min-w-0">
+              <p
+                className="font-mono text-[0.68rem] uppercase tracking-[0.12em]"
+                style={{ color: accent }}
+              >
+                {startDate ?? "?"} — {endDate ?? "Actualidad"}
+              </p>
+              <p
+                className="mt-1 truncate font-mono text-[0.67rem] uppercase tracking-[0.1em]"
+                style={{ color: "var(--text-subtle)" }}
+              >
+                {institution}
+              </p>
+            </div>
           </div>
+
+          <h4
+            className="font-serif text-[1.2rem] leading-snug sm:text-[1.28rem]"
+            style={{ color: "var(--text-primary)", fontWeight: 500 }}
+          >
+            {program}
+          </h4>
         </div>
       </div>
-    </div>
+    </article>
+  );
+}
+
+/* ── Chips decorativos ────────────────────────────────────────── */
+function AboutChip({
+  label,
+  color,
+}: {
+  label: string;
+  color: string;
+}) {
+  return (
+    <span
+      className="inline-flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold"
+      style={{
+        background: "linear-gradient(180deg, var(--bg-surface-strong), var(--bg-surface))",
+        border: "1px solid var(--border)",
+        color: "var(--text-primary)",
+        boxShadow: "var(--card-shadow)",
+      }}
+    >
+      <span
+        className="h-3 w-3 rounded-full"
+        style={{
+          background: color,
+          boxShadow: `0 0 10px ${color}70`,
+        }}
+        aria-hidden="true"
+      />
+      {label}
+    </span>
   );
 }
 
@@ -143,49 +145,145 @@ function EducationCard({
 export default function EducationSection() {
   return (
     <SectionLayout id="education">
+      <div className="grid gap-10 lg:grid-cols-[1.08fr_0.92fr] lg:gap-12">
+      {/* Columna izquierda: Sobre mí */}
+      <div className="max-w-[640px]">
 
-      {/* Encabezado */}
-      <div className="mb-12">
-        <p className="font-mono text-[0.75rem] tracking-[0.1em] uppercase text-[#e8a838] mb-2"
-          aria-hidden="true">
-          // 01. background
-        </p>
-        <div className="flex items-end gap-4">
-          <h2 className="font-serif font-bold leading-none"
-            style={{ fontSize: "clamp(2rem, 4vw, 3rem)", color: "var(--text-primary)" }}>
-            Educación
-          </h2>
-          <div className="flex-1 h-[2px] mb-2 max-w-[100px]"
-            style={{ background: "linear-gradient(to right, #e8a838, transparent)" }}
-            aria-hidden="true" />
-        </div>
-        <p className="mt-3 font-mono text-[0.82rem] max-w-[440px] leading-relaxed"
-          style={{ color: "var(--text-muted)" }}>
-          Los bloques que forman mi base técnica y académica.
-        </p>
+      {/* studs decorativos */}
+      <div className="flex gap-[6px] mb-4" aria-hidden="true">
+        <span className="h-[9px] w-[9px] rounded-full"
+          style={{
+            background: "var(--accent)",
+            boxShadow: "0 0 10px rgba(232,168,56,0.25)"
+          }}
+        />
+        <span className="h-[9px] w-[9px] rounded-full"
+          style={{
+            background: "var(--bg-elevated)",
+            border: "1px solid var(--border)",
+            boxShadow: "var(--stud-shadow)"
+          }}
+        />
+        <span className="h-[9px] w-[9px] rounded-full"
+          style={{
+            background: "var(--bg-elevated)",
+            border: "1px solid var(--border)",
+            boxShadow: "var(--stud-shadow)"
+          }}
+        />
       </div>
 
-      {/* Timeline */}
-      {education.length === 0 ? (
-        <p className="font-mono text-[0.85rem]" style={{ color: "var(--text-muted)" }}>
-          (Sin datos todavía)
-        </p>
-      ) : (
-        <div className="flex flex-col">
-          {education.map((e, i) => (
-            <EducationCard
-              key={e.id}
-              institution={e.institution}
-              program={e.program}
-              startDate={e.startDate}
-              endDate={e.endDate}
-              notes={e.notes}
-              index={i}
-            />
-          ))}
-        </div>
-      )}
+      <h2
+        className="font-serif font-bold leading-tight"
+        style={{
+          fontSize: "clamp(1.8rem,3vw,2.6rem)",
+          color: "var(--text-primary)"
+        }}
+      >
+        Construyendo software
+        <br />
+        <span style={{ color: "var(--accent)" }}>
+          pieza por pieza
+        </span>
+      </h2>
 
+      <p
+        className="mt-5 font-mono text-[0.78rem] uppercase tracking-[0.12em]"
+        style={{ color: "var(--text-subtle)" }}
+      >
+        desarrollo web • full stack • sistemas
+      </p>
+
+      <div
+        className="mt-7 h-px w-[120px]"
+        style={{
+          background: "linear-gradient(to right,var(--accent),transparent)"
+        }}
+      />
+
+      {/* texto */}
+      <div className="mt-8 space-y-5 text-[0.98rem] leading-8">
+
+        <p style={{ color: "var(--text-muted)" }}>
+          Soy Greilyn Esquivel Salazar y actualmente curso la carrera de
+          Ingeniería en Sistemas. Me gusta entender cómo funcionan las
+          cosas y transformar ideas en soluciones digitales claras.
+        </p>
+
+        <p style={{ color: "var(--text-muted)" }}>
+          Me interesa el desarrollo web full stack, donde puedo combinar
+          interfaces limpias con una lógica sólida en backend y manejo
+          estructurado de datos.
+        </p>
+
+      </div>
+
+      <div className="mt-8 flex flex-wrap gap-3">
+        <AboutChip label="Ing. en Sistemas" color="#ff8a65" />
+        <AboutChip label="Full-Stack" color="#f1c40f" />
+        <AboutChip label="UI/UX" color="#57a4d8" />
+        <AboutChip label="Bases de Datos" color="#30c06f" />
+      </div>
+
+    </div>
+        {/* Columna derecha: educación */}
+        <div>
+          <div
+            className="overflow-hidden rounded-[28px] p-5 sm:p-6"
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015))",
+              border: "1px solid var(--border)",
+              boxShadow: "var(--card-shadow)",
+            }}
+          >
+            <div className="mb-5 flex items-center justify-between gap-4">
+              <div className="flex gap-[6px]" aria-hidden="true">
+                <LegoStud size={11} />
+                <LegoStud size={11} />
+                <LegoStud size={11} />
+              </div>
+
+              <p
+                className="font-mono text-[0.68rem] uppercase tracking-[0.12em]"
+                style={{ color: "var(--text-subtle)" }}
+              >
+                01 / Formación
+              </p>
+            </div>
+
+
+            <h3
+              className="mt-2 font-serif text-2xl font-bold leading-tight"
+              style={{ color: "var(--accent)" }}
+            >
+              Mi base académica
+            </h3>
+
+            <div className="mt-7 space-y-4">
+              {education.length === 0 ? (
+                <p
+                  className="font-mono text-[0.85rem]"
+                  style={{ color: "var(--text-muted)" }}
+                >
+                  (Sin datos todavía)
+                </p>
+              ) : (
+                education.map((e, i) => (
+                  <EducationCard
+                    key={e.id}
+                    institution={e.institution}
+                    program={e.program}
+                    startDate={e.startDate}
+                    endDate={e.endDate}
+                    index={i}
+                  />
+                ))
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
     </SectionLayout>
   );
 }

@@ -2,11 +2,17 @@ import type { EducationItem } from "../../../shared/types/education";
 
 export const education: EducationItem[] = [
   {
-    id: "edu-una",
+    id: "edu-diplomado-programacion",
+    institution: "Universidad Nacional de Costa Rica (UNA)",
+    program: "Diplomado en Programación de Aplicaciones Informáticas",
+    startDate: "Ene 2023",
+    endDate: "Jul 2025"
+  },
+  {
+    id: "edu-ingenieria-sistemas",
     institution: "Universidad Nacional de Costa Rica (UNA)",
     program: "Ingeniería en Sistemas",
-    startDate: "2023",
-    endDate: "Actualidad",
-    notes: ["Enfoque en desarrollo de software y buenas prácticas.", "Participación en proyectos académicos y personales."],
+    startDate: "ENE 2023",
+    endDate: "Actualidad"
   },
 ];
