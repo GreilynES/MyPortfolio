@@ -1,1 +1,161 @@
 @import "tailwindcss";
+@custom-variant dark (&:is(.dark *));
+
+/* ── Tokens de color por modo ────────────────────────────────
+   Modo oscuro: variables en :root (default)
+   Modo claro:  se sobreescriben en .dark → NO, al revés:
+   El Navbar pone clase "dark" en <html> para oscuro.
+   Sin clase = claro (default del sistema).
+
+   Estrategia:
+   - :root         = modo CLARO (default sin clase)
+   - .dark          = modo OSCURO (cuando Navbar agrega la clase)
+──────────────────────────────────────────────────────────────── */
+
+:root {
+  /* Fondos */
+  --bg-base:       #f5f0e8;   /* fondo principal */
+  --bg-surface:    #ffffff;   /* tarjetas */
+  --bg-elevated:   #ede8de;   /* elementos elevados, studs */
+  --bg-hero:       #f5f0e8;   /* fondo del hero */
+
+  /* Bordes */
+  --border:        #e0d5c0;
+  --border-subtle: #d4c9b0;
+
+  /* Texto */
+  --text-primary:  #1a1200;
+  --text-muted:    #6b5c3e;
+  --text-subtle:   #9c8a6e;
+
+  /* Patrón de studs en el hero */
+  --stud-dot-1:    rgba(0, 0, 0, 0.07);
+  --stud-dot-2:    rgba(0, 0, 0, 0.035);
+
+  /* Gradiente overlay del hero */
+  --hero-overlay-1: rgba(245, 240, 232, 0.65);
+  --hero-overlay-2: rgba(245, 240, 232, 0.8);
+  --hero-overlay-3: rgba(245, 240, 232, 0.9);
+
+  /* Scroll bar */
+  --scroll-track:  #c4b89a;
+
+  /* Stud box-shadow */
+  --stud-shadow:   inset 0 -2px 4px rgba(0,0,0,0.15), 0 1px 0 rgba(0,0,0,0.05);
+
+  /* Social link */
+  --social-bg:     #ede8de;
+  --social-shadow: 0 3px 0 rgba(0,0,0,0.12);
+
+  /* Caja LEGO avatar */
+  --lego-box-bg:   linear-gradient(145deg, #ffffff, #f0ebe0);
+  --lego-box-shadow: 0 0 0 1px rgba(0,0,0,0.06), 0 20px 60px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.8);
+  --lego-window-bg: radial-gradient(ellipse at center, #f0ebe0 0%, #e8e0d0 100%);
+  --lego-footer-bg: #ede8de;
+}
+
+.dark {
+  /* Fondos */
+  --bg-base:       #0d1117;
+  --bg-surface:    #161b22;
+  --bg-elevated:   #21262d;
+  --bg-hero:       #0d1117;
+
+  /* Bordes */
+  --border:        rgba(255, 255, 255, 0.08);
+  --border-subtle: rgba(255, 255, 255, 0.05);
+
+  /* Texto */
+  --text-primary:  #e8e8e8;
+  --text-muted:    #8b949e;
+  --text-subtle:   #484f58;
+
+  /* Patrón de studs */
+  --stud-dot-1:    rgba(255, 255, 255, 0.06);
+  --stud-dot-2:    rgba(255, 255, 255, 0.025);
+
+  /* Gradiente overlay del hero */
+  --hero-overlay-1: rgba(13, 17, 23, 0.65);
+  --hero-overlay-2: rgba(13, 17, 23, 0.8);
+  --hero-overlay-3: rgba(13, 17, 23, 0.9);
+
+  /* Scroll bar */
+  --scroll-track:  #484f58;
+
+  /* Stud box-shadow */
+  --stud-shadow:   inset 0 -2px 4px rgba(0,0,0,0.45), 0 1px 0 rgba(255,255,255,0.04);
+
+  /* Social link */
+  --social-bg:     #21262d;
+  --social-shadow: 0 3px 0 rgba(0,0,0,0.4);
+
+  /* Caja LEGO avatar */
+  --lego-box-bg:   linear-gradient(145deg, #1c1f24, #13161a);
+  --lego-box-shadow: 0 0 0 1px rgba(255,255,255,0.04), 0 20px 60px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.06);
+  --lego-window-bg: radial-gradient(ellipse at center, #1e2028 0%, #13161a 100%);
+  --lego-footer-bg: #21262d;
+}
+
+/* ── Transición suave al cambiar de modo ─────────────────────── */
+*, *::before, *::after {
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.2s ease;
+  box-sizing: border-box;
+}
+
+/* Excepciones: no animar lo que tiene transiciones propias */
+img, svg, [style*="animation"] {
+  transition: none;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+}
+
+/* ── Keyframes del Hero ──────────────────────────────────────── */
+@keyframes hero-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+@keyframes hero-pulse-dot {
+  0%, 100% { opacity: 1;    transform: scale(1);   }
+  50%       { opacity: 0.55; transform: scale(0.8); }
+}
+@keyframes hero-fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+@keyframes hero-float-tl {
+  0%, 100% { transform: translateY(0px)  rotate(-15deg); }
+  50%       { transform: translateY(-8px) rotate(-12deg); }
+}
+@keyframes hero-float-tr {
+  0%, 100% { transform: translateY(0px)  rotate(12deg); }
+  50%       { transform: translateY(-8px) rotate(15deg); }
+}
+@keyframes hero-float-bl {
+  0%, 100% { transform: translateY(0px)  rotate(8deg);  }
+  50%       { transform: translateY(-8px) rotate(11deg); }
+}
+@keyframes hero-float-br {
+  0%, 100% { transform: translateY(0px)  rotate(-10deg); }
+  50%       { transform: translateY(-8px) rotate(-7deg);  }
+}
+@keyframes hero-scroll-fill {
+  0%   { transform: translateY(-100%); opacity: 1; }
+  80%  { transform: translateY(300%);  opacity: 1; }
+  81%  { opacity: 0; }
+  82%  { transform: translateY(-100%); }
+  83%  { opacity: 1; }
+  100% { transform: translateY(-100%); opacity: 1; }
+}
+
+.hero-studs-bg {
+  transition: transform 0.12s ease-out !important;
+}
