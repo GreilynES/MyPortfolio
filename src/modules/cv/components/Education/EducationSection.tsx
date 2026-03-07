@@ -1,4 +1,3 @@
-
 import SectionLayout from "../../../../shared/components/layout/SectionLayout";
 import { education } from "../../data/education";
 
@@ -18,7 +17,6 @@ function IconGrad() {
     </svg>
   );
 }
-
 
 function LegoStud({ size = 10 }: { size?: number }) {
   return (
@@ -50,7 +48,6 @@ function EducationCard({
   endDate?: string;
   index: number;
 }) {
-
   const accentColors = ["#e8a838", "#57a4d8", "#30c06f", "#c084fc"];
   const accent = accentColors[index % accentColors.length];
 
@@ -64,13 +61,11 @@ function EducationCard({
         boxShadow: "var(--card-shadow)",
       }}
     >
-        <div
-          className="flex w-full items-start justify-between gap-4 px-5 py-5 text-left sm:px-6"
-        >
+      <div className="w-full px-4 py-4 text-left sm:px-6 sm:py-5">
         <div className="min-w-0">
-          <div className="mb-4 flex items-center gap-3">
+          <div className="mb-4 flex items-start gap-3">
             <div
-              className="flex h-10 w-10 items-center justify-center rounded-xl"
+              className="mt-0.5 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl"
               style={{
                 background: `linear-gradient(180deg, ${accent}22, ${accent}12)`,
                 border: `1px solid ${accent}40`,
@@ -82,15 +77,16 @@ function EducationCard({
               <IconGrad />
             </div>
 
-            <div className="min-w-0">
+            <div className="min-w-0 flex-1">
               <p
-                className="font-mono text-[0.68rem] uppercase tracking-[0.12em]"
+                className="break-words font-mono text-[0.62rem] uppercase tracking-[0.1em] sm:text-[0.68rem] sm:tracking-[0.12em]"
                 style={{ color: accent }}
               >
                 {startDate ?? "?"} — {endDate ?? "Actualidad"}
               </p>
+
               <p
-                className="mt-1 truncate font-mono text-[0.67rem] uppercase tracking-[0.1em]"
+                className="mt-1 break-words font-mono text-[0.62rem] uppercase tracking-[0.08em] sm:text-[0.67rem] sm:tracking-[0.1em]"
                 style={{ color: "var(--text-subtle)" }}
               >
                 {institution}
@@ -99,7 +95,7 @@ function EducationCard({
           </div>
 
           <h4
-            className="font-serif text-[1.2rem] leading-snug sm:text-[1.28rem]"
+            className="break-words font-serif text-[1.05rem] leading-snug sm:text-[1.28rem]"
             style={{ color: "var(--text-primary)", fontWeight: 500 }}
           >
             {program}
@@ -120,7 +116,7 @@ function AboutChip({
 }) {
   return (
     <span
-      className="inline-flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold"
+      className="inline-flex max-w-full items-center gap-2 rounded-xl px-3 py-2 text-[0.82rem] font-semibold sm:px-4 sm:py-3 sm:text-sm"
       style={{
         background: "linear-gradient(180deg, var(--bg-surface-strong), var(--bg-surface))",
         border: "1px solid var(--border)",
@@ -129,14 +125,14 @@ function AboutChip({
       }}
     >
       <span
-        className="h-3 w-3 rounded-full"
+        className="h-3 w-3 flex-shrink-0 rounded-full"
         style={{
           background: color,
           boxShadow: `0 0 10px ${color}70`,
         }}
         aria-hidden="true"
       />
-      {label}
+      <span className="break-words">{label}</span>
     </span>
   );
 }
@@ -146,91 +142,89 @@ export default function EducationSection() {
   return (
     <SectionLayout id="education">
       <div className="grid gap-10 lg:grid-cols-[1.08fr_0.92fr] lg:gap-12">
-      {/* Columna izquierda: Sobre mí */}
-      <div className="max-w-[640px]">
+        {/* Columna izquierda: Sobre mí */}
+        <div className="min-w-0 max-w-[640px]">
+          {/* studs decorativos */}
+          <div className="mb-4 flex gap-[6px]" aria-hidden="true">
+            <span
+              className="h-[9px] w-[9px] rounded-full"
+              style={{
+                background: "var(--accent)",
+                boxShadow: "0 0 10px rgba(232,168,56,0.25)",
+              }}
+            />
+            <span
+              className="h-[9px] w-[9px] rounded-full"
+              style={{
+                background: "var(--bg-elevated)",
+                border: "1px solid var(--border)",
+                boxShadow: "var(--stud-shadow)",
+              }}
+            />
+            <span
+              className="h-[9px] w-[9px] rounded-full"
+              style={{
+                background: "var(--bg-elevated)",
+                border: "1px solid var(--border)",
+                boxShadow: "var(--stud-shadow)",
+              }}
+            />
+          </div>
 
-      {/* studs decorativos */}
-      <div className="flex gap-[6px] mb-4" aria-hidden="true">
-        <span className="h-[9px] w-[9px] rounded-full"
-          style={{
-            background: "var(--accent)",
-            boxShadow: "0 0 10px rgba(232,168,56,0.25)"
-          }}
-        />
-        <span className="h-[9px] w-[9px] rounded-full"
-          style={{
-            background: "var(--bg-elevated)",
-            border: "1px solid var(--border)",
-            boxShadow: "var(--stud-shadow)"
-          }}
-        />
-        <span className="h-[9px] w-[9px] rounded-full"
-          style={{
-            background: "var(--bg-elevated)",
-            border: "1px solid var(--border)",
-            boxShadow: "var(--stud-shadow)"
-          }}
-        />
-      </div>
+          <h2
+            className="break-words font-serif font-bold leading-tight"
+            style={{
+              fontSize: "clamp(1.8rem,3vw,2.6rem)",
+              color: "var(--text-primary)",
+            }}
+          >
+            Construyendo software
+            <br />
+            <span style={{ color: "var(--accent)" }}>pieza por pieza</span>
+          </h2>
 
-      <h2
-        className="font-serif font-bold leading-tight"
-        style={{
-          fontSize: "clamp(1.8rem,3vw,2.6rem)",
-          color: "var(--text-primary)"
-        }}
-      >
-        Construyendo software
-        <br />
-        <span style={{ color: "var(--accent)" }}>
-          pieza por pieza
-        </span>
-      </h2>
+          <p
+            className="mt-5 break-words font-mono text-[0.68rem] uppercase tracking-[0.12em] sm:text-[0.78rem]"
+            style={{ color: "var(--text-subtle)" }}
+          >
+            desarrollo web • full stack • sistemas
+          </p>
 
-      <p
-        className="mt-5 font-mono text-[0.78rem] uppercase tracking-[0.12em]"
-        style={{ color: "var(--text-subtle)" }}
-      >
-        desarrollo web • full stack • sistemas
-      </p>
-
-      <div
-        className="mt-7 h-px w-[120px]"
-        style={{
-          background: "linear-gradient(to right,var(--accent),transparent)"
-        }}
-      />
-
-      {/* texto */}
-      <div className="mt-8 space-y-5 text-[0.98rem] leading-8">
-
-        <p style={{ color: "var(--text-muted)" }}>
-          Soy Greilyn Esquivel Salazar y actualmente curso la carrera de
-          Ingeniería en Sistemas. Me gusta entender cómo funcionan las
-          cosas y transformar ideas en soluciones digitales.
-        </p>
-
-        <p style={{ color: "var(--text-muted)" }}>
-          Me gusta aprender y me motiva encontrar formas prácticas de 
-          mejorar procesos. Además de la tecnología, me gusta el deporte, 
-          ver series, pasar tiempo en familia y hablar con la gente, 
-          porque creo que la comunicación abre puertas en cualquier contexto.
-        </p>
-
-      </div>
-
-      <div className="mt-8 flex flex-wrap gap-3">
-        <AboutChip label="Ing. en Sistemas" color="#ff8a65" />
-        <AboutChip label="Full-Stack" color="#f1c40f" />
-        <AboutChip label="UI/UX" color="#57a4d8" />
-        <AboutChip label="Bases de Datos" color="#30c06f" />
-      </div>
-
-    </div>
-        {/* Columna derecha: educación */}
-        <div>
           <div
-            className="overflow-hidden rounded-[28px] p-5 sm:p-6"
+            className="mt-7 h-px w-[120px]"
+            style={{
+              background: "linear-gradient(to right,var(--accent),transparent)",
+            }}
+          />
+
+          {/* texto */}
+          <div className="mt-8 space-y-5 text-[0.96rem] leading-8 sm:text-[0.98rem]">
+            <p className="break-words" style={{ color: "var(--text-muted)" }}>
+              Soy Greilyn Esquivel Salazar y actualmente curso la carrera de
+              Ingeniería en Sistemas. Me gusta entender cómo funcionan las
+              cosas y transformar ideas en soluciones digitales.
+            </p>
+
+            <p className="break-words" style={{ color: "var(--text-muted)" }}>
+              Me gusta aprender y me motiva encontrar formas prácticas de
+              mejorar procesos. Además de la tecnología, me gusta el deporte,
+              ver series, pasar tiempo en familia y hablar con la gente,
+              porque creo que la comunicación abre puertas en cualquier contexto.
+            </p>
+          </div>
+
+          <div className="mt-8 flex flex-wrap gap-3">
+            <AboutChip label="Ing. en Sistemas" color="#ff8a65" />
+            <AboutChip label="Full-Stack" color="#f1c40f" />
+            <AboutChip label="UI/UX" color="#57a4d8" />
+            <AboutChip label="Bases de Datos" color="#30c06f" />
+          </div>
+        </div>
+
+        {/* Columna derecha: educación */}
+        <div className="min-w-0">
+          <div
+            className="overflow-hidden rounded-[28px] p-4 sm:p-6"
             style={{
               background:
                 "linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015))",
@@ -238,24 +232,23 @@ export default function EducationSection() {
               boxShadow: "var(--card-shadow)",
             }}
           >
-            <div className="mb-5 flex items-center justify-between gap-4">
-              <div className="flex gap-[6px]" aria-hidden="true">
+            <div className="mb-5 flex items-start justify-between gap-4">
+              <div className="flex gap-[6px] pt-1" aria-hidden="true">
                 <LegoStud size={11} />
                 <LegoStud size={11} />
                 <LegoStud size={11} />
               </div>
 
               <p
-                className="font-mono text-[0.68rem] uppercase tracking-[0.12em]"
+                className="shrink-0 text-right font-mono text-[0.58rem] uppercase tracking-[0.1em] sm:text-[0.68rem] sm:tracking-[0.12em]"
                 style={{ color: "var(--text-subtle)" }}
               >
                 01 / Formación
               </p>
             </div>
 
-
             <h3
-              className="mt-2 font-serif text-2xl font-bold leading-tight"
+              className="mt-2 break-words font-serif text-[1.8rem] font-bold leading-tight sm:text-2xl"
               style={{ color: "var(--accent)" }}
             >
               Mi base académica
