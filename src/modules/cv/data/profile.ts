@@ -40,7 +40,7 @@ export const profile: Profile = {
   tagline: "Construyendo el futuro, un bloque a la vez.",
   stats: [
     { value: "3+",  label: "Años aprendiendo" },
-    { value: "4+", label: "Proyectos"         },
     { value: "10+", label: "Tecnologías"       },
+    { value: "⬇", label: "Descargar CV", href: "/cv_greilyn_esquivel_salazar.pdf" }
   ],
 };

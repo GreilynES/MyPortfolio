@@ -37,18 +37,104 @@ function IconLinkedin() {
   );
 }
 
-/* ── Stud decorativo ──────────────────────────────────────────── */
-function Stud() {
+
+/* ── Bloque mini LEGO ─────────────────────────────────────────── */
+function MiniBrick({ color }: { color: string }) {
   return (
-    <span
-      className="w-[10px] h-[10px] rounded-full flex-shrink-0"
+    <div className="flex items-end gap-[3px]" aria-hidden="true">
+      <div
+        className="rounded-t-[8px] px-[7px] pb-[6px] pt-[5px]"
+        style={{
+          background: color,
+          boxShadow:
+            "inset 0 2px 0 rgba(255,255,255,0.15), inset 0 -2px 0 rgba(0,0,0,0.22)",
+        }}
+      >
+        <div className="flex gap-[5px]">
+          <span
+            className="h-[11px] w-[11px] rounded-full"
+            style={{
+              background: color,
+              boxShadow:
+                "inset 0 -2px 2px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.15)",
+            }}
+          />
+          <span
+            className="h-[11px] w-[11px] rounded-full"
+            style={{
+              background: color,
+              boxShadow:
+                "inset 0 -2px 2px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.15)",
+            }}
+          />
+        </div>
+      </div>
+      <div className="h-[4px] w-[42px] rounded-b-[8px]" style={{ background: "rgba(0,0,0,0.28)" }} />
+    </div>
+  );
+}
+
+/* ── Card de contacto individual ──────────────────────────────── */
+function ContactItem({
+  href,
+  label,
+  value,
+  accent,
+  icon,
+  external = false,
+}: {
+  href: string;
+  label: string;
+  value: string;
+  accent: string;
+  icon: React.ReactNode;
+  external?: boolean;
+}) {
+  return (
+    <a
+      href={href}
+      target={external ? "_blank" : undefined}
+      rel={external ? "noopener noreferrer" : undefined}
+      className="group relative overflow-hidden rounded-2xl p-4 transition-all duration-200 hover:-translate-y-[2px] no-underline"
       style={{
-        background: "var(--bg-elevated)",
+        background: "linear-gradient(180deg, var(--bg-elevated), rgba(255,255,255,0.02))",
         border: "1px solid var(--border)",
-        boxShadow: "inset 0 -1px 2px rgba(0,0,0,0.3)",
+        boxShadow: "0 4px 0 rgba(0,0,0,0.12)",
       }}
-      aria-hidden="true"
-    />
+    >
+      <div
+        className="absolute inset-x-0 top-0 h-[3px]"
+        style={{ background: `linear-gradient(to right, ${accent}, transparent)` }}
+        aria-hidden="true"
+      />
+
+      <div className="flex items-center gap-4">
+        <div
+          className="relative flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl text-white transition-transform duration-200 group-hover:scale-[1.04]"
+          style={{
+            background: accent,
+            boxShadow: "0 4px 0 rgba(0,0,0,0.22)",
+          }}
+        >
+          {icon}
+        </div>
+
+        <div className="min-w-0 flex-1">
+          <p
+            className="font-mono text-[0.68rem] uppercase tracking-[0.08em]"
+            style={{ color: "var(--text-muted)" }}
+          >
+            {label}
+          </p>
+          <p
+            className="mt-1 font-serif text-[1rem] leading-snug break-words"
+            style={{ color: "var(--text-primary)", fontWeight: 600 }}
+          >
+            {value}
+          </p>
+        </div>
+      </div>
+    </a>
   );
 }
 
@@ -60,7 +146,6 @@ export default function ContactSection() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("sending");
-    // Simulación de envío
     setTimeout(() => {
       setStatus("sent");
       setFormData({ name: "", email: "", message: "" });
@@ -75,9 +160,6 @@ export default function ContactSection() {
     <SectionLayout id="contact">
       {/* Encabezado */}
       <div className="mb-12">
-        <p className="font-mono text-[0.75rem] tracking-[0.1em] uppercase text-[#e8a838] mb-2" aria-hidden="true">
-          // 06. connect
-        </p>
         <div className="flex items-end gap-4">
           <h2
             className="font-serif font-bold leading-none"
@@ -91,85 +173,91 @@ export default function ContactSection() {
             aria-hidden="true"
           />
         </div>
-        <p className="mt-3 font-mono text-[0.82rem] max-w-[440px] leading-relaxed" style={{ color: "var(--text-muted)" }}>
-          Construyamos algo juntos. Estoy disponible para proyectos freelance, colaboraciones o simplemente para charlar.
-        </p>
+
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1.08fr_0.92fr]">
         {/* Formulario */}
         <div
-          className="relative rounded-xl overflow-hidden"
+          className="relative overflow-hidden rounded-[24px]"
           style={{
             background: "var(--bg-surface)",
             border: "1px solid var(--border)",
             boxShadow: "0 4px 0 rgba(0,0,0,0.15)",
           }}
         >
-          {/* Barra superior */}
           <div className="h-[3px] w-full" style={{ background: "#e8a838" }} />
 
-          {/* Header con studs */}
-          <div className="px-6 pt-5 pb-4" style={{ borderBottom: "1px solid var(--border)" }}>
+          <div
+            className="flex items-center justify-between gap-4 px-6 pb-4 pt-5"
+            style={{ borderBottom: "1px solid var(--border)" }}
+          >
             <div className="flex items-center gap-3">
-              <div className="flex gap-[4px]" aria-hidden="true">
-                <Stud />
-                <Stud />
-                <Stud />
-              </div>
-              <h3 className="font-serif font-bold text-[1.1rem]" style={{ color: "var(--text-primary)" }}>
+              <h3 className="font-serif font-bold text-[1.12rem]" style={{ color: "var(--text-primary)" }}>
                 Enviar mensaje
               </h3>
             </div>
+
+            <MiniBrick color="#444444" />
           </div>
 
-          {/* Form */}
           <form onSubmit={handleSubmit} className="p-6 flex flex-col gap-5">
-            {/* Nombre */}
-            <div className="flex flex-col gap-2">
-              <label htmlFor="name" className="font-mono text-[0.7rem] tracking-[0.08em] uppercase" style={{ color: "var(--text-muted)" }}>
-                Nombre
-              </label>
-              <input
-                type="text"
-                id="name"
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                required
-                className="w-full px-4 py-3 rounded font-mono text-[0.875rem] outline-none transition-all duration-200 focus:ring-2 focus:ring-[#e8a838]"
-                style={{
-                  background: "var(--bg-elevated)",
-                  border: "1px solid var(--border)",
-                  color: "var(--text-primary)",
-                }}
-                placeholder="Tu nombre"
-              />
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+              <div className="flex flex-col gap-2">
+                <label
+                  htmlFor="name"
+                  className="font-mono text-[0.7rem] tracking-[0.08em] uppercase"
+                  style={{ color: "var(--text-muted)" }}
+                >
+                  Nombre
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  required
+                  className="w-full rounded px-4 py-3 font-mono text-[0.875rem] outline-none transition-all duration-200 focus:ring-2 focus:ring-[#e8a838]"
+                  style={{
+                    background: "var(--bg-elevated)",
+                    border: "1px solid var(--border)",
+                    color: "var(--text-primary)",
+                  }}
+                  placeholder="Tu nombre"
+                />
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <label
+                  htmlFor="email"
+                  className="font-mono text-[0.7rem] tracking-[0.08em] uppercase"
+                  style={{ color: "var(--text-muted)" }}
+                >
+                  Email
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  required
+                  className="w-full rounded px-4 py-3 font-mono text-[0.875rem] outline-none transition-all duration-200 focus:ring-2 focus:ring-[#e8a838]"
+                  style={{
+                    background: "var(--bg-elevated)",
+                    border: "1px solid var(--border)",
+                    color: "var(--text-primary)",
+                  }}
+                  placeholder="tu@email.com"
+                />
+              </div>
             </div>
 
-            {/* Email */}
             <div className="flex flex-col gap-2">
-              <label htmlFor="email" className="font-mono text-[0.7rem] tracking-[0.08em] uppercase" style={{ color: "var(--text-muted)" }}>
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                required
-                className="w-full px-4 py-3 rounded font-mono text-[0.875rem] outline-none transition-all duration-200 focus:ring-2 focus:ring-[#e8a838]"
-                style={{
-                  background: "var(--bg-elevated)",
-                  border: "1px solid var(--border)",
-                  color: "var(--text-primary)",
-                }}
-                placeholder="tu@email.com"
-              />
-            </div>
-
-            {/* Mensaje */}
-            <div className="flex flex-col gap-2">
-              <label htmlFor="message" className="font-mono text-[0.7rem] tracking-[0.08em] uppercase" style={{ color: "var(--text-muted)" }}>
+              <label
+                htmlFor="message"
+                className="font-mono text-[0.7rem] tracking-[0.08em] uppercase"
+                style={{ color: "var(--text-muted)" }}
+              >
                 Mensaje
               </label>
               <textarea
@@ -177,154 +265,113 @@ export default function ContactSection() {
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                 required
-                rows={4}
-                className="w-full px-4 py-3 rounded font-mono text-[0.875rem] outline-none transition-all duration-200 resize-none focus:ring-2 focus:ring-[#e8a838]"
+                rows={5}
+                className="w-full resize-none rounded px-4 py-3 font-mono text-[0.875rem] outline-none transition-all duration-200 focus:ring-2 focus:ring-[#e8a838]"
                 style={{
                   background: "var(--bg-elevated)",
                   border: "1px solid var(--border)",
                   color: "var(--text-primary)",
                 }}
-                placeholder="Tu mensaje..."
+                placeholder="Cuéntame un poco sobre tu idea o mensaje..."
               />
             </div>
 
-            {/* Botón de envío */}
-            <button
-              type="submit"
-              disabled={status === "sending"}
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 font-mono text-[0.85rem] font-bold tracking-[0.04em] uppercase rounded text-[#1a1200] bg-[#e8a838] transition-all duration-150 hover:-translate-y-[2px] active:translate-y-[2px] disabled:opacity-60"
-              style={{ boxShadow: "0 4px 0 #8a5e00" }}
-            >
-              {status === "sending" ? (
-                "Enviando..."
-              ) : status === "sent" ? (
-                "Enviado"
-              ) : (
-                <>
-                  Enviar mensaje
-                  <IconSend />
-                </>
-              )}
-            </button>
+            <div className="flex flex-wrap items-center gap-4 pt-1">
+              <button
+                type="submit"
+                disabled={status === "sending"}
+                className="inline-flex items-center justify-center gap-2 rounded px-6 py-3 font-mono text-[0.85rem] font-bold uppercase tracking-[0.04em] text-[#1a1200] transition-all duration-150 hover:-translate-y-[2px] active:translate-y-[2px] disabled:opacity-60"
+                style={{ background: "#e8a838", boxShadow: "0 4px 0 #8a5e00" }}
+              >
+                {status === "sending" ? (
+                  "Enviando..."
+                ) : status === "sent" ? (
+                  "Enviado"
+                ) : (
+                  <>
+                    Enviar mensaje
+                    <IconSend />
+                  </>
+                )}
+              </button>
 
-            {status === "sent" && (
-              <p className="font-mono text-[0.8rem] text-[#27ae60]">Mensaje enviado correctamente.</p>
-            )}
+              {status === "sent" && (
+                <p className="font-mono text-[0.8rem]" style={{ color: "#27ae60" }}>
+                  Mensaje enviado correctamente.
+                </p>
+              )}
+            </div>
           </form>
 
-          {/* Sombra inferior */}
           <div className="h-[3px]" style={{ background: "rgba(0,0,0,0.12)" }} />
         </div>
 
         {/* Información de contacto */}
         <div className="flex flex-col gap-6">
-          {/* Tarjeta de info */}
           <div
-            className="relative rounded-xl overflow-hidden"
+            className="relative overflow-hidden rounded-[24px]"
             style={{
               background: "var(--bg-surface)",
               border: "1px solid var(--border)",
               boxShadow: "0 4px 0 rgba(0,0,0,0.15)",
             }}
           >
-            <div className="h-[3px] w-full" style={{ background: "#2980b9" }} />
-            <div className="p-6">
-              <h3 className="font-serif font-bold text-[1.1rem] mb-4" style={{ color: "var(--text-primary)" }}>
-                O encuéntrame en
-              </h3>
+            <div className="h-[3px] w-full" style={{ background: "#e8a838" }} />
 
-              <div className="flex flex-col gap-4">
-                {emailSocial && (
-                  <a
-                    href={emailSocial.href}
-                    className="flex items-center gap-4 p-3 rounded transition-all duration-200 hover:-translate-y-[1px] group"
-                    style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)" }}
-                  >
-                    <div
-                      className="w-10 h-10 rounded flex items-center justify-center flex-shrink-0 text-white group-hover:scale-105 transition-transform"
-                      style={{ background: "#a93226", boxShadow: "0 3px 0 rgba(0,0,0,0.3)" }}
-                    >
-                      <IconMail />
-                    </div>
-                    <div>
-                      <p className="font-mono text-[0.68rem] uppercase tracking-[0.06em]" style={{ color: "var(--text-muted)" }}>
-                        Email
-                      </p>
-                      <p className="font-serif text-[0.95rem]" style={{ color: "var(--text-primary)" }}>
-                        {emailSocial.href.replace("mailto:", "")}
-                      </p>
-                    </div>
-                  </a>
-                )}
-
-                {githubSocial && (
-                  <a
-                    href={githubSocial.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-4 p-3 rounded transition-all duration-200 hover:-translate-y-[1px] group"
-                    style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)" }}
-                  >
-                    <div
-                      className="w-10 h-10 rounded flex items-center justify-center flex-shrink-0 text-white group-hover:scale-105 transition-transform"
-                      style={{ background: "#1a1200", boxShadow: "0 3px 0 rgba(0,0,0,0.3)" }}
-                    >
-                      <IconGithub />
-                    </div>
-                    <div>
-                      <p className="font-mono text-[0.68rem] uppercase tracking-[0.06em]" style={{ color: "var(--text-muted)" }}>
-                        GitHub
-                      </p>
-                      <p className="font-serif text-[0.95rem]" style={{ color: "var(--text-primary)" }}>
-                        {githubSocial.href.replace("https://github.com/", "@")}
-                      </p>
-                    </div>
-                  </a>
-                )}
-
-                {linkedinSocial && (
-                  <a
-                    href={linkedinSocial.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-4 p-3 rounded transition-all duration-200 hover:-translate-y-[1px] group"
-                    style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)" }}
-                  >
-                    <div
-                      className="w-10 h-10 rounded flex items-center justify-center flex-shrink-0 text-white group-hover:scale-105 transition-transform"
-                      style={{ background: "#2980b9", boxShadow: "0 3px 0 rgba(0,0,0,0.3)" }}
-                    >
-                      <IconLinkedin />
-                    </div>
-                    <div>
-                      <p className="font-mono text-[0.68rem] uppercase tracking-[0.06em]" style={{ color: "var(--text-muted)" }}>
-                        LinkedIn
-                      </p>
-                      <p className="font-serif text-[0.95rem]" style={{ color: "var(--text-primary)" }}>
-                        {profile.fullName}
-                      </p>
-                    </div>
-                  </a>
-                )}
+            <div
+              className="flex items-center justify-between gap-4 px-6 pb-4 pt-5"
+              style={{ borderBottom: "1px solid var(--border)" }}
+            >
+              <div>
+                <h3 className="font-serif font-bold text-[1.15rem]" style={{ color: "var(--text-primary)" }}>
+                  También puedes encontrarme en
+                </h3>
+                <p
+                  className="mt-1 font-mono text-[0.68rem] uppercase tracking-[0.08em]"
+                  style={{ color: "var(--text-subtle)" }}
+                >
+                  Canales directos
+                </p>
               </div>
-            </div>
-            <div className="h-[3px]" style={{ background: "rgba(0,0,0,0.12)" }} />
-          </div>
 
-          {/* CTA final */}
-          <div
-            className="relative rounded-xl overflow-hidden p-6 text-center"
-            style={{
-              background: "linear-gradient(135deg, rgba(232,168,56,0.1), rgba(232,168,56,0.05))",
-              border: "1px solid rgba(232,168,56,0.3)",
-            }}
-          >
-            <p className="font-serif text-[1.1rem] mb-2" style={{ color: "var(--text-primary)" }}>
-              Construyamos algo increíble
-            </p>
-            <p className="font-mono text-[0.8rem]" style={{ color: "var(--text-muted)" }}>
-              Cada gran proyecto comienza con una conversación.
-            </p>
+              <MiniBrick color="#444444" />
+            </div>
+
+            <div className="p-6 flex flex-col gap-4">
+              {emailSocial && (
+                <ContactItem
+                  href={emailSocial.href}
+                  label="Email"
+                  value={emailSocial.href.replace("mailto:", "")}
+                  accent="#c94b3788"
+                  icon={<IconMail />}
+                />
+              )}
+
+              {githubSocial && (
+                <ContactItem
+                  href={githubSocial.href}
+                  label="GitHub"
+                  value={githubSocial.href.replace("https://github.com/", "@")}
+                  accent="#2a2116"
+                  icon={<IconGithub />}
+                  external
+                />
+              )}
+
+              {linkedinSocial && (
+                <ContactItem
+                  href={linkedinSocial.href}
+                  label="LinkedIn"
+                  value={profile.fullName}
+                  accent="#297fb985"
+                  icon={<IconLinkedin />}
+                  external
+                />
+              )}
+            </div>
+
+            <div className="h-[3px]" style={{ background: "rgba(0,0,0,0.12)" }} />
           </div>
         </div>
       </div>

@@ -16,4 +16,5 @@ export interface Profile {
 export interface ProfileStat {
   value: string;
   label: string;
+  href?: string;
 }

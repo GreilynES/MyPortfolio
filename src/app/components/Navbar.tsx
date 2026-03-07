@@ -7,7 +7,6 @@ const NAV_ITEMS = [
   { label: "Sobre mí",   href: `#${SECTION_IDS.education}` },
   { label: "Experiencia", href: `#${SECTION_IDS.experience}` },
   { label: "Habilidades", href: `#${SECTION_IDS.skills}` },
-  { label: "Idiomas",     href: `#${SECTION_IDS.languages}` },
   { label: "Portafolio",  href: `#${SECTION_IDS.portfolio}` },
   { label: "Contacto",    href: `#${SECTION_IDS.contact}` },
 ] as const;

@@ -14,7 +14,7 @@ export default function SectionLayout({ id, children, fullWidth }: SectionLayout
   }
 
   return (
-    <section id={id} className="min-h-screen flex items-center px-6 py-16 border border-gray">
+    <section id={id} className="min-h-screen flex items-center px-6 py-16 ">
       <div className="max-w-6xl mx-auto w-full">
         {children}
       </div>

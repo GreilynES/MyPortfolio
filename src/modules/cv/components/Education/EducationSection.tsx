@@ -207,13 +207,14 @@ export default function EducationSection() {
         <p style={{ color: "var(--text-muted)" }}>
           Soy Greilyn Esquivel Salazar y actualmente curso la carrera de
           Ingeniería en Sistemas. Me gusta entender cómo funcionan las
-          cosas y transformar ideas en soluciones digitales claras.
+          cosas y transformar ideas en soluciones digitales.
         </p>
 
         <p style={{ color: "var(--text-muted)" }}>
-          Me interesa el desarrollo web full stack, donde puedo combinar
-          interfaces limpias con una lógica sólida en backend y manejo
-          estructurado de datos.
+          Me gusta aprender y me motiva encontrar formas prácticas de 
+          mejorar procesos. Además de la tecnología, me gusta el deporte, 
+          ver series, pasar tiempo en familia y hablar con la gente, 
+          porque creo que la comunicación abre puertas en cualquier contexto.
         </p>
 
       </div>

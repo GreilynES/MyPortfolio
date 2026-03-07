@@ -133,7 +133,7 @@ function LegoAvatarBox() {
             Full-Stack Dev
           </span>
           <span className="font-mono text-[0.66rem] font-bold px-2 py-[2px] rounded text-[#1a1200] bg-[#e8a838]">
-            21+
+            21 años
           </span>
         </div>
       </div>
@@ -200,13 +200,6 @@ export default function HeroSection() {
           {/* Columna de texto */}
           <div className="flex flex-col gap-6 items-center lg:items-start text-center lg:text-left flex-1 min-w-0">
 
-            {/* Badge */}
-            <p className="inline-flex items-center gap-2 font-mono text-[0.8rem] tracking-[0.05em] text-[#e8a838]">
-              <span className="w-2 h-2 rounded-full bg-[#e8a838] flex-shrink-0"
-                style={{ boxShadow: "0 0 8px #e8a838", animation: "hero-pulse-dot 2s ease-in-out infinite" }}
-                aria-hidden="true" />
-              // LEGO Developer Series
-            </p>
 
             {/* Nombre */}
             <h1 className="flex flex-col leading-none gap-[0.08em]">
@@ -246,26 +239,49 @@ export default function HeroSection() {
             {/* Stats en ladrillos */}
             {profile.stats && profile.stats.length > 0 && (
               <ul className="flex flex-wrap gap-4 justify-center lg:justify-start list-none p-0 m-0">
-                {profile.stats.map((stat) => (
-                  <li key={stat.label}
-                    className="relative rounded min-w-[108px] transition-all duration-200 hover:-translate-y-[3px]"
-                    style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)" }}
-                    onMouseEnter={(e) => (e.currentTarget.style.boxShadow = "0 8px 24px rgba(232,168,56,0.14)")}
-                    onMouseLeave={(e) => (e.currentTarget.style.boxShadow = "none")}>
-                    <div className="absolute -top-[10px] left-2 flex gap-[5px]" aria-hidden="true">
-                      <Stud /><Stud />
-                    </div>
-                    <div className="flex flex-col items-center gap-[0.2rem] px-4 pt-[1.2rem] pb-[0.9rem]">
-                      <span className="font-serif font-bold text-[1.75rem] leading-none text-[#e8a838]">
-                        {stat.value}
-                      </span>
-                      <span className="font-mono text-[0.68rem] text-center uppercase tracking-[0.04em]"
-                        style={{ color: "var(--text-muted)" }}>
-                        {stat.label}
-                      </span>
-                    </div>
-                  </li>
-                ))}
+            {profile.stats.map((stat) => {
+
+              const content = (
+                <>
+                  <span
+                    className="font-serif font-bold text-[1.75rem] leading-none text-[#e8a838]"
+                  >
+                    {stat.value}
+                  </span>
+
+                  <span
+                    className="font-mono text-[0.68rem] text-center uppercase tracking-[0.04em]"
+                    style={{ color: "var(--text-muted)" }}
+                  >
+                    {stat.label}
+                  </span>
+                </>
+              );
+
+              return (
+                <li
+                  key={stat.label}
+                  className="relative rounded min-w-[108px] transition-all duration-200 hover:-translate-y-[3px]"
+                  style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)" }}
+                >
+                  <div className="absolute -top-[10px] left-2 flex gap-[5px]" aria-hidden="true">
+                    <Stud /><Stud />
+                  </div>
+
+                  <div className="flex flex-col items-center gap-[0.2rem] px-4 pt-[1.2rem] pb-[0.9rem]">
+
+                    {stat.href ? (
+                      <a href={stat.href} download className="flex flex-col items-center no-underline">
+                        {content}
+                      </a>
+                    ) : (
+                      content
+                    )}
+
+                  </div>
+                </li>
+              );
+            })}
               </ul>
             )}
 

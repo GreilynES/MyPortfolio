@@ -1,71 +1,69 @@
 @import "tailwindcss";
-@custom-variant dark (&:is(.dark *));
+
 
 :root {
   color-scheme: light;
 
-  --bg-base: #f4efe6;
-  --bg-soft: #fbf8f2;
-  --bg-surface: rgba(255, 255, 255, 0.8);
-  --bg-surface-strong: #ffffff;
-  --bg-elevated: #ede5d8;
-  --bg-hero: #f4efe6;
-  --bg-section-tint: rgba(232, 168, 56, 0.06);
-  --bg-glass: rgba(255, 255, 255, 0.72);
+  --bg-base: #e6ddcf;
+  --bg-soft: #efe6d8;
+  --bg-surface: rgba(240, 232, 220, 0.85);
+  --bg-surface-strong: #e8decd;
+  --bg-elevated: #ddd2bf;
+  --bg-glass: rgba(235, 226, 210, 0.72);
 
-  --border: rgba(97, 73, 35, 0.16);
-  --border-strong: rgba(97, 73, 35, 0.28);
-  --border-subtle: rgba(97, 73, 35, 0.1);
+  --border: rgba(92, 71, 39, 0.14);
+  --border-strong: rgba(92, 71, 39, 0.22);
+  --border-subtle: rgba(92, 71, 39, 0.08);
 
-  --text-primary: #1a1200;
-  --text-muted: #66583d;
-  --text-subtle: #8f7f62;
+  --text-primary: #2a2319;
+  --text-muted: #6b5d48;
+  --text-subtle: #9a8c73;
 
   --accent: #e8a838;
   --accent-strong: #8a5e00;
-  --accent-soft: rgba(232, 168, 56, 0.14);
-  --accent-blue: #2980b9;
-  --accent-green: #27ae60;
+  --accent-soft: rgba(232, 168, 56, 0.12);
 
-  --stud-dot-1: rgba(44, 37, 24, 0.06);
-  --stud-dot-2: rgba(44, 37, 24, 0.03);
-  --hero-overlay-1: rgba(244, 239, 230, 0.3);
-  --hero-overlay-2: rgba(244, 239, 230, 0.72);
-  --hero-overlay-3: rgba(244, 239, 230, 0.94);
+  --stud-dot-1: rgba(58, 46, 28, 0.05);
+  --stud-dot-2: rgba(58, 46, 28, 0.02);
 
-  --section-glow: radial-gradient(circle at top left, rgba(232, 168, 56, 0.12), transparent 42%);
-  --card-shadow: 0 16px 45px rgba(54, 37, 5, 0.08);
-  --card-shadow-hover: 0 22px 55px rgba(54, 37, 5, 0.14);
-  --stud-shadow: inset 0 -2px 4px rgba(0, 0, 0, 0.15), 0 1px 0 rgba(255, 255, 255, 0.45);
-  --social-bg: rgba(255, 255, 255, 0.8);
-  --social-shadow: 0 8px 18px rgba(54, 37, 5, 0.1);
-  --scroll-track: #d7c8ac;
+  --section-glow: radial-gradient(circle at top left, rgba(232, 168, 56, 0.08), transparent 40%);
 
-  --lego-box-bg: linear-gradient(145deg, #ffffff, #efe7da);
-  --lego-box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06), 0 26px 70px rgba(54, 37, 5, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.8);
-  --lego-window-bg: radial-gradient(ellipse at center, #f7f2e8 0%, #ece2d1 100%);
-  --lego-footer-bg: #efe7da;
+  --card-shadow: 0 14px 36px rgba(74, 53, 20, 0.08);
+  --card-shadow-hover: 0 18px 48px rgba(74, 53, 20, 0.14);
+
+  --social-bg: rgba(232, 223, 208, 0.8);
+  --scroll-track: #cdbda1;
+
+  --lego-box-bg: linear-gradient(145deg, #ece3d4, #ddd2bf);
+  --lego-box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.05),
+    0 24px 60px rgba(74, 53, 20, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+
+  --lego-window-bg: radial-gradient(ellipse at center, #efe6d8 0%, #ddd2bf 100%);
+
+  --lego-footer-bg: #ddd2bf;
 }
 
 .dark {
   color-scheme: dark;
 
-  --bg-base: #0d1117;
-  --bg-soft: #11161d;
-  --bg-surface: rgba(22, 27, 34, 0.86);
-  --bg-surface-strong: #161b22;
-  --bg-elevated: #21262d;
-  --bg-hero: #0d1117;
+  --bg-base: #121820;
+  --bg-soft: #18202a;
+  --bg-surface: rgba(28, 35, 44, 0.86);
+  --bg-surface-strong: #1d2530;
+  --bg-elevated: #26303b;
+  --bg-hero: #121820;
   --bg-section-tint: rgba(232, 168, 56, 0.07);
-  --bg-glass: rgba(13, 17, 23, 0.74);
+  --bg-glass: rgba(18, 24, 32, 0.74);
 
-  --border: rgba(255, 255, 255, 0.09);
-  --border-strong: rgba(255, 255, 255, 0.15);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.14);
   --border-subtle: rgba(255, 255, 255, 0.05);
 
-  --text-primary: #edf2f7;
-  --text-muted: #9da7b3;
-  --text-subtle: #59636f;
+  --text-primary: #e9edf2;
+  --text-muted: #a4afbb;
+  --text-subtle: #66717d;
 
   --accent: #e8a838;
   --accent-strong: #8a5e00;
@@ -73,24 +71,24 @@
   --accent-blue: #57a4d8;
   --accent-green: #30c06f;
 
-  --stud-dot-1: rgba(255, 255, 255, 0.05);
-  --stud-dot-2: rgba(255, 255, 255, 0.024);
-  --hero-overlay-1: rgba(13, 17, 23, 0.22);
-  --hero-overlay-2: rgba(13, 17, 23, 0.72);
-  --hero-overlay-3: rgba(13, 17, 23, 0.96);
+  --stud-dot-1: rgba(255, 255, 255, 0.045);
+  --stud-dot-2: rgba(255, 255, 255, 0.022);
+  --hero-overlay-1: rgba(18, 24, 32, 0.2);
+  --hero-overlay-2: rgba(18, 24, 32, 0.68);
+  --hero-overlay-3: rgba(18, 24, 32, 0.92);
 
   --section-glow: radial-gradient(circle at top left, rgba(232, 168, 56, 0.08), transparent 38%);
-  --card-shadow: 0 18px 48px rgba(0, 0, 0, 0.35);
-  --card-shadow-hover: 0 24px 60px rgba(0, 0, 0, 0.48);
-  --stud-shadow: inset 0 -2px 4px rgba(0, 0, 0, 0.45), 0 1px 0 rgba(255, 255, 255, 0.05);
-  --social-bg: rgba(33, 38, 45, 0.9);
-  --social-shadow: 0 10px 26px rgba(0, 0, 0, 0.35);
-  --scroll-track: #484f58;
+  --card-shadow: 0 18px 44px rgba(0, 0, 0, 0.28);
+  --card-shadow-hover: 0 24px 56px rgba(0, 0, 0, 0.38);
+  --stud-shadow: inset 0 -2px 4px rgba(0, 0, 0, 0.4), 0 1px 0 rgba(255, 255, 255, 0.04);
+  --social-bg: rgba(38, 48, 59, 0.9);
+  --social-shadow: 0 10px 26px rgba(0, 0, 0, 0.3);
+  --scroll-track: #4d5864;
 
-  --lego-box-bg: linear-gradient(145deg, #1c1f24, #13161a);
-  --lego-box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.04), 0 20px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.06);
-  --lego-window-bg: radial-gradient(ellipse at center, #1e2028 0%, #13161a 100%);
-  --lego-footer-bg: #21262d;
+  --lego-box-bg: linear-gradient(145deg, #242c36, #171d25);
+  --lego-box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.04), 0 20px 56px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  --lego-window-bg: radial-gradient(ellipse at center, #242c36 0%, #171d25 100%);
+  --lego-footer-bg: #26303b;
 }
 
 *, *::before, *::after {
@@ -109,9 +107,7 @@ html {
 body {
   margin: 0;
   min-width: 320px;
-  background:
-    radial-gradient(circle at top left, rgba(232, 168, 56, 0.08), transparent 28%),
-    linear-gradient(to bottom, var(--bg-soft), var(--bg-base));
+  background: var(--bg-base);
   color: var(--text-primary);
   font-family: Inter, ui-sans-serif, system-ui, sans-serif;
 }
@@ -173,6 +169,10 @@ body::before {
 
 .hero-studs-bg {
   transition: transform 0.12s ease-out !important;
+}
+
+.no-contact-glow::before {
+  display: none;
 }
 
 @keyframes hero-blink {

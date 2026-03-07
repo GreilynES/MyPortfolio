@@ -13,6 +13,6 @@ export interface Project {
   shortDescription: string;
   technologies: string[];
   media?: ProjectMedia[];
-  links?: ProjectLink[];
-  // Si luego quieres: longDescription, highlights, role, etc.
+  links?: { label: string; href: string }[];
+  image?: string;
 }

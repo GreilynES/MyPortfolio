@@ -1,12 +1,17 @@
-
 import SectionLayout from "../../../../shared/components/layout/SectionLayout";
 import { experience } from "../../data/experience";
 
-/* ── Ícono Wrench / Herramienta ──────────────────────────────── */
+/* ── Ícono portafolio / trabajo ──────────────────────────────── */
 function IconBriefcase() {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}
-      className="w-5 h-5" aria-hidden="true">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.8}
+      className="h-5 w-5"
+      aria-hidden="true"
+    >
       <rect x="2" y="7" width="20" height="14" rx="2" />
       <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
       <line x1="12" y1="12" x2="12" y2="12" />
@@ -14,17 +19,81 @@ function IconBriefcase() {
   );
 }
 
-/* ── Ícono Check ──────────────────────────────────────────────── */
+/* ── Ícono check ─────────────────────────────────────────────── */
 function IconCheck() {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}
-      className="w-3 h-3" aria-hidden="true">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2.5}
+      className="h-3 w-3"
+      aria-hidden="true"
+    >
       <polyline points="20 6 9 17 4 12" />
     </svg>
   );
 }
 
-/* ── Tarjeta de experiencia estilo manual LEGO ───────────────── */
+/* ── Ladrillo LEGO decorativo ───────────────────────────────── */
+function LegoBrick({
+  color = "#e8a838",
+  studs = 2,
+}: {
+  color?: string;
+  studs?: number;
+}) {
+  return (
+    <div className="relative hidden sm:block" aria-hidden="true">
+      <div
+        className="flex gap-[5px] rounded-t px-[8px] pb-[8px] pt-[6px]"
+        style={{
+          background: color,
+          boxShadow:
+            "inset 0 2px 0 rgba(255,255,255,0.15), inset 0 -2px 0 rgba(0,0,0,0.3), 0 8px 18px rgba(0,0,0,0.22)",
+        }}
+      >
+        {Array.from({ length: studs }).map((_, i) => (
+          <span
+            key={i}
+            className="relative h-[14px] w-[14px] rounded-full"
+            style={{
+              background: color,
+              top: "-7px",
+              filter: "brightness(1.12)",
+              boxShadow:
+                "inset 0 -2px 0 rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.2)",
+            }}
+          />
+        ))}
+      </div>
+
+      <div
+        className="h-[4px] rounded-b"
+        style={{ background: "rgba(0,0,0,0.4)" }}
+      />
+    </div>
+  );
+}
+
+/* ── Stud simple ─────────────────────────────────────────────── */
+function LegoStud({ size = 10 }: { size?: number }) {
+  return (
+    <span
+      aria-hidden="true"
+      className="rounded-full"
+      style={{
+        width: size,
+        height: size,
+        background: "var(--bg-elevated)",
+        border: "1px solid var(--border)",
+        boxShadow: "var(--stud-shadow)",
+      }}
+    />
+  );
+}
+
+/* ── Card de experiencia ─────────────────────────────────────── */
 function ExperienceCard({
   companyOrOrg,
   role,
@@ -43,123 +112,154 @@ function ExperienceCard({
   setNumber: number;
 }) {
   const isActive = !endDate || endDate === "Actualidad";
+  const accentColors = ["#7cc793", "#57a4d8", "#30c06f", "#ff8a65"];
+  const accent = accentColors[(setNumber - 1) % accentColors.length];
 
   return (
-    <div className="relative rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-[2px]"
+    <article
+      className="group relative overflow-hidden rounded-[26px] transition-all duration-300 hover:-translate-y-[3px]"
       style={{
-        background: "var(--bg-surface)",
+        background:
+          "linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015))",
         border: "1px solid var(--border)",
-        boxShadow: "0 4px 0 rgba(0,0,0,0.15)",
+        boxShadow: "var(--card-shadow)",
       }}
-      onMouseEnter={(e) => { (e.currentTarget as HTMLDivElement).style.boxShadow = "0 8px 24px rgba(232,168,56,0.1), 0 4px 0 rgba(0,0,0,0.15)"; (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(232,168,56,0.3)"; }}
-      onMouseLeave={(e) => { (e.currentTarget as HTMLDivElement).style.boxShadow = "0 4px 0 rgba(0,0,0,0.15)"; (e.currentTarget as HTMLDivElement).style.borderColor = "var(--border)"; }}
     >
+      <div
+        className="absolute inset-x-0 top-0 h-[3px]"
+        style={{ background: `linear-gradient(to right, ${accent}, transparent)` }}
+        aria-hidden="true"
+      />
 
-      {/* ── Header estilo caja de set LEGO ── */}
-      <div className="relative px-5 pt-5 pb-4"
-        style={{ borderBottom: "1px solid var(--border)" }}>
+      <div className="px-5 pb-5 pt-5 sm:px-6">
+        <div className="mb-4 flex items-start justify-between gap-4">
+          <div className="flex gap-[6px]" aria-hidden="true">
+            <LegoStud size={9} />
+            <LegoStud size={9} />
+            <LegoStud size={9} />
+          </div>
 
-        {/* Número de set — esquina superior derecha */}
-        <div className="absolute top-4 right-5 flex items-center gap-2">
-          {isActive && (
-            <span className="flex items-center gap-1 font-mono text-[0.62rem] tracking-[0.06em] uppercase px-2 py-[2px] rounded-full"
-              style={{ background: "rgba(39,174,96,0.15)", color: "#27ae60", border: "1px solid rgba(39,174,96,0.3)" }}>
-              <span className="w-[5px] h-[5px] rounded-full bg-[#27ae60]"
-                style={{ boxShadow: "0 0 6px #27ae60" }} aria-hidden="true" />
-              Activo
-            </span>
-          )}
-          <span className="font-mono text-[0.62rem] tracking-[0.1em] uppercase px-2 py-[2px] rounded"
-            style={{ background: "var(--bg-elevated)", color: "var(--text-subtle)", border: "1px solid var(--border)" }}>
-            Set #{String(setNumber).padStart(3, "0")}
-          </span>
-        </div>
+          <div className="flex items-center gap-2">
+            {isActive && (
+              <span
+                className="inline-flex items-center gap-1 rounded-full px-2 py-[3px] font-mono text-[0.62rem] uppercase tracking-[0.08em]"
+                style={{
+                  background: "rgba(48,192,111,0.12)",
+                  color: "#30c06f",
+                  border: "1px solid rgba(48,192,111,0.28)",
+                }}
+              >
+                <span
+                  className="h-[5px] w-[5px] rounded-full"
+                  style={{ background: "#30c06f", boxShadow: "0 0 8px #30c06f" }}
+                />
+                Activo
+              </span>
+            )}
 
-        {/* Studs decorativos */}
-        <div className="flex gap-[5px] mb-3" aria-hidden="true">
-          {[...Array(4)].map((_, i) => (
-            <span key={i} className="w-[9px] h-[9px] rounded-full"
+            <span
+              className="rounded px-2 py-[3px] font-mono text-[0.62rem] uppercase tracking-[0.08em]"
               style={{
                 background: "var(--bg-elevated)",
+                color: "var(--text-subtle)",
                 border: "1px solid var(--border)",
-                boxShadow: "inset 0 -1px 2px rgba(0,0,0,0.3)",
-              }} />
-          ))}
+              }}
+            >
+              Set #{String(setNumber).padStart(3, "0")}
+            </span>
+          </div>
         </div>
 
-        {/* Empresa + rol */}
-        <div className="flex items-start gap-3 pr-24">
-          <div className="w-9 h-9 rounded flex items-center justify-center flex-shrink-0 text-[#1a1200]"
-            style={{ background: "#e8a838", boxShadow: "0 3px 0 #8a5e00" }}>
+        <div className="flex items-start gap-4">
+          <div
+            className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl"
+            style={{
+              background: `linear-gradient(180deg, ${accent}22, ${accent}10)`,
+              border: `1px solid ${accent}40`,
+              color: accent,
+              boxShadow:
+                "0 10px 24px rgba(0,0,0,0.16), inset 0 1px 0 rgba(255,255,255,0.05)",
+            }}
+          >
             <IconBriefcase />
           </div>
-          <div>
-            <p className="font-mono text-[0.72rem] tracking-[0.06em] uppercase mb-0.5"
-              style={{ color: "var(--text-muted)" }}>
+
+          <div className="min-w-0 flex-1">
+            <p
+              className="font-mono text-[0.68rem] uppercase tracking-[0.12em]"
+              style={{ color: accent }}
+            >
+              {startDate ?? "?"} — {endDate ?? "Actualidad"}
+            </p>
+
+            <p
+              className="mt-2 font-mono text-[0.68rem] uppercase tracking-[0.1em]"
+              style={{ color: "var(--text-subtle)" }}
+            >
               {companyOrOrg}
             </p>
-            <h3 className="font-serif font-bold text-[1.1rem] leading-tight"
-              style={{ color: "var(--text-primary)" }}>
+
+            <h3
+              className="mt-2 font-serif text-[1.22rem] leading-snug sm:text-[1.32rem]"
+              style={{ color: "var(--text-primary)", fontWeight: 600 }}
+            >
               {role}
             </h3>
           </div>
         </div>
 
-        {/* Fecha */}
-        <div className="mt-3 ml-12">
-          <span className="font-mono text-[0.68rem] tracking-[0.05em]"
-            style={{ color: "var(--text-subtle)" }}>
-            {startDate ?? "?"} — {endDate ?? "Actualidad"}
-          </span>
-        </div>
-      </div>
-
-      {/* ── Cuerpo: pasos del manual ── */}
-      <div className="px-5 py-4 flex flex-col gap-4">
-
-        {/* Responsabilidades como pasos */}
         {responsibilities && responsibilities.length > 0 && (
-          <div>
-            <p className="font-mono text-[0.65rem] tracking-[0.1em] uppercase mb-3"
-              style={{ color: "#e8a838" }}>
-              Pasos de ensamblaje
-            </p>
-            <ol className="flex flex-col gap-2 list-none m-0 p-0">
+          <div
+            className="mt-5 pt-5"
+            style={{ borderTop: "1px solid var(--border-subtle)" }}
+          >
+            <ul className="m-0 flex list-none flex-col gap-3 p-0">
               {responsibilities.map((resp, i) => (
                 <li key={i} className="flex items-start gap-3">
-                  {/* Número de paso estilo manual */}
-                  <span className="flex-shrink-0 w-5 h-5 rounded flex items-center justify-center font-mono text-[0.6rem] font-bold text-[#1a1200]"
-                    style={{ background: "#e8a838", boxShadow: "0 2px 0 #8a5e00" }}>
-                    {i + 1}
-                  </span>
-                  <span className="text-[0.875rem] leading-relaxed pt-[1px]"
-                    style={{ color: "var(--text-muted)" }}>
+                  <span
+                    className="mt-[10px] h-[7px] w-[7px] flex-shrink-0 rounded-full"
+                    style={{ background: accent }}
+                    aria-hidden="true"
+                  />
+                  <span
+                    className="text-[0.93rem] leading-7"
+                    style={{ color: "var(--text-muted)" }}
+                  >
                     {resp}
                   </span>
                 </li>
               ))}
-            </ol>
+            </ul>
           </div>
         )}
 
-        {/* Tecnologías — "piezas incluidas" */}
         {technologies && technologies.length > 0 && (
-          <div style={{ borderTop: "1px solid var(--border)", paddingTop: "0.875rem" }}>
-            <p className="font-mono text-[0.65rem] tracking-[0.1em] uppercase mb-2"
-              style={{ color: "var(--text-subtle)" }}>
+          <div
+            className="mt-5 pt-5"
+            style={{ borderTop: "1px solid var(--border-subtle)" }}
+          >
+            <p
+              className="mb-3 font-mono text-[0.66rem] uppercase tracking-[0.12em]"
+              style={{ color: "var(--text-subtle)" }}
+            >
               Piezas incluidas
             </p>
+
             <div className="flex flex-wrap gap-2">
               {technologies.map((tech) => (
-                <span key={tech}
-                  className="inline-flex items-center gap-1.5 font-mono text-[0.7rem] tracking-[0.03em] px-2.5 py-[4px] rounded"
+                <span
+                  key={tech}
+                  className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-[5px] font-mono text-[0.7rem]"
                   style={{
                     background: "var(--bg-elevated)",
                     border: "1px solid var(--border)",
                     color: "var(--text-muted)",
-                    boxShadow: "0 2px 0 rgba(0,0,0,0.1)",
-                  }}>
-                  <span className="text-[#27ae60]"><IconCheck /></span>
+                    boxShadow: "0 2px 0 rgba(0,0,0,0.08)",
+                  }}
+                >
+                  <span style={{ color: accent }}>
+                    <IconCheck />
+                  </span>
                   {tech}
                 </span>
               ))}
@@ -167,61 +267,89 @@ function ExperienceCard({
           </div>
         )}
       </div>
-
-      {/* Sombra base del ladrillo */}
-      <div className="h-[3px]" style={{ background: "rgba(0,0,0,0.12)" }} />
-    </div>
+    </article>
   );
 }
 
-/* ── Componente principal ─────────────────────────────────────── */
+/* ── Componente principal ────────────────────────────────────── */
 export default function ExperienceSection() {
   return (
     <SectionLayout id="experience">
-
-      {/* Encabezado */}
-      <div className="mb-12">
-        <p className="font-mono text-[0.75rem] tracking-[0.1em] uppercase text-[#e8a838] mb-2"
-          aria-hidden="true">
-          // 02. experience
-        </p>
-        <div className="flex items-end gap-4">
-          <h2 className="font-serif font-bold leading-none"
-            style={{ fontSize: "clamp(2rem, 4vw, 3rem)", color: "var(--text-primary)" }}>
-            Experiencia
-          </h2>
-          <div className="flex-1 h-[2px] mb-2 max-w-[100px]"
-            style={{ background: "linear-gradient(to right, #e8a838, transparent)" }}
-            aria-hidden="true" />
-        </div>
-        <p className="mt-3 font-mono text-[0.82rem] max-w-[440px] leading-relaxed"
-          style={{ color: "var(--text-muted)" }}>
-          Sets ensamblados con código real, propósito y aprendizaje continuo.
-        </p>
-      </div>
-
-      {/* Cards */}
-      {experience.length === 0 ? (
-        <p className="font-mono text-[0.85rem]" style={{ color: "var(--text-muted)" }}>
-          (Sin datos todavía)
-        </p>
-      ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {experience.map((x, i) => (
-            <ExperienceCard
-              key={x.id}
-              companyOrOrg={x.companyOrOrg}
-              role={x.role}
-              startDate={x.startDate}
-              endDate={x.endDate}
-              responsibilities={x.responsibilities}
-              technologies={x.technologies}
-              setNumber={i + 1}
+      <div className="relative">
+        {/* Fondo FULL WIDTH real */}
+        <div
+            className="pointer-events-none absolute -top-16 -bottom-16 left-1/2 -translate-x-1/2 w-screen z-0"
+            aria-hidden="true"
+          >
+            <div
+              className="absolute inset-0"
+              style={{
+                backgroundImage: `
+                  radial-gradient(circle, var(--stud-dot-1) 1.5px, transparent 1.5px),
+                  radial-gradient(circle, var(--stud-dot-2) 1px, transparent 1px)
+                `,
+                backgroundSize: "30px 30px, 15px 15px",
+                backgroundPosition: "0 0, 7.5px 7.5px",
+              }}
             />
-          ))}
         </div>
-      )}
 
+        {/* Contenido */}
+        <div className="relative z-10">
+          <div className="mb-12">
+            <div className="mb-5 flex items-start justify-between gap-6">
+              <div>
+                <div className="flex items-end gap-4">
+                  <h2
+                    className="font-serif font-bold leading-none"
+                    style={{
+                      fontSize: "clamp(2rem, 4vw, 3rem)",
+                      color: "var(--text-primary)",
+                    }}
+                  >
+                    Experiencia
+                  </h2>
+
+                  <div
+                    className="mb-2 h-[2px] max-w-[100px] flex-1"
+                    style={{
+                      background:
+                        "linear-gradient(to right, var(--accent), transparent)",
+                    }}
+                    aria-hidden="true"
+                  />
+                </div>
+              </div>
+
+              <div className="hidden md:flex items-start gap-3 pt-1" aria-hidden="true">
+                <LegoBrick color="#57a4d8" studs={3} />
+                <LegoBrick color="#7cc793" studs={3} />
+              </div>
+            </div>
+          </div>
+
+          {experience.length === 0 ? (
+            <p className="font-mono text-[0.85rem]" style={{ color: "var(--text-muted)" }}>
+              (Sin datos todavía)
+            </p>
+          ) : (
+            <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
+              {experience.map((x, i) => (
+                <ExperienceCard
+                  key={x.id}
+                  companyOrOrg={x.companyOrOrg}
+                  role={x.role}
+                  startDate={x.startDate}
+                  endDate={x.endDate}
+                  responsibilities={x.responsibilities}
+                  technologies={x.technologies}
+                  setNumber={i + 1}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
     </SectionLayout>
   );
 }
