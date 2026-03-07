@@ -19,14 +19,14 @@
   --text-muted: #6b5d48;
   --text-subtle: #9a8c73;
 
-  --accent: #e8a838;
-  --accent-strong: #8a5e00;
-  --accent-soft: rgba(232, 168, 56, 0.12);
+  --accent: #c79a4a;
+  --accent-strong: #7a5a1f;
+  --accent-soft: rgba(199, 154, 74, 0.10);
+  --section-glow: radial-gradient(circle at top left, rgba(199, 154, 74, 0.05), transparent 40%);
 
   --stud-dot-1: rgba(58, 46, 28, 0.05);
   --stud-dot-2: rgba(58, 46, 28, 0.02);
 
-  --section-glow: radial-gradient(circle at top left, rgba(232, 168, 56, 0.08), transparent 40%);
 
   --card-shadow: 0 14px 36px rgba(74, 53, 20, 0.08);
   --card-shadow-hover: 0 18px 48px rgba(74, 53, 20, 0.14);
