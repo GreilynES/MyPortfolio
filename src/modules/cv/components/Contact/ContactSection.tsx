@@ -1,6 +1,29 @@
 import { useState } from "react";
 import SectionLayout from "../../../../shared/components/layout/SectionLayout";
 import { profile } from "../../data/profile";
+import { useForm } from "@tanstack/react-form";
+import { z } from "zod";
+
+/* ── Schema Zod ──────────────────────────────────────────────── */
+const contactSchema = z.object({
+  name: z
+    .string()
+    .trim()
+    .min(1, "El nombre es obligatorio.")
+    .min(2, "El nombre debe tener al menos 2 caracteres.")
+    .max(80, "El nombre no puede superar 80 caracteres."),
+  email: z
+    .string()
+    .trim()
+    .min(1, "El email es obligatorio.")
+    .email("Ingresa un correo válido."),
+  message: z
+    .string()
+    .trim()
+    .min(1, "El mensaje es obligatorio.")
+    .min(10, "El mensaje debe tener al menos 10 caracteres.")
+    .max(800, "El mensaje no puede superar 800 caracteres."),
+});
 
 /* ── Íconos ───────────────────────────────────────────────────── */
 function IconMail() {
@@ -36,7 +59,6 @@ function IconLinkedin() {
     </svg>
   );
 }
-
 
 /* ── Bloque mini LEGO ─────────────────────────────────────────── */
 function MiniBrick({ color }: { color: string }) {
@@ -138,27 +160,76 @@ function ContactItem({
   );
 }
 
+/* ── Utilidad ─────────────────────────────────────────────────── */
+function getFieldError(meta: {
+  isTouched?: boolean;
+  errors?: unknown[];
+}) {
+  if (!meta.isTouched || !meta.errors?.length) return null;
+  const first = meta.errors[0];
+  return typeof first === "string" ? first : "Campo inválido.";
+}
+
 /* ── Componente principal ─────────────────────────────────────── */
 export default function ContactSection() {
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setStatus("sending");
-    setTimeout(() => {
-      setStatus("sent");
-      setFormData({ name: "", email: "", message: "" });
-    }, 1500);
-  };
 
   const emailSocial = profile.socials.find((s) => s.platform === "email");
   const githubSocial = profile.socials.find((s) => s.platform === "github");
   const linkedinSocial = profile.socials.find((s) => s.platform === "linkedin");
 
+  const form = useForm({
+    defaultValues: {
+      name: "",
+      email: "",
+      message: "",
+    },
+    validators: {
+      onSubmit: ({ value }) => {
+        const result = contactSchema.safeParse(value);
+        if (result.success) return undefined;
+
+        const fieldErrors = result.error.flatten().fieldErrors;
+        return {
+          fields: {
+            name: fieldErrors.name?.[0],
+            email: fieldErrors.email?.[0],
+            message: fieldErrors.message?.[0],
+          },
+        };
+      },
+    },
+    onSubmit: async ({ value }) => {
+      try {
+        setStatus("sending");
+
+        const subject = encodeURIComponent(
+          `Mensaje desde el portafolio de ${value.name}`
+        );
+
+        const body = encodeURIComponent(
+    `Nombre: ${value.name}
+    Email: ${value.email}
+
+    Mensaje:
+    ${value.message}`
+        );
+
+        const mailtoLink = `mailto:greilynesquivel@gmail.com?subject=${subject}&body=${body}`;
+
+        window.location.href = mailtoLink;
+
+        form.reset();
+        setStatus("sent");
+      } catch (error) {
+        console.error(error);
+        setStatus("error");
+      }
+    },
+  });
+
   return (
     <SectionLayout id="contact">
-      {/* Encabezado */}
       <div className="mb-12">
         <div className="flex items-end gap-4">
           <h2
@@ -173,7 +244,6 @@ export default function ContactSection() {
             aria-hidden="true"
           />
         </div>
-
       </div>
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1.08fr_0.92fr]">
@@ -201,103 +271,228 @@ export default function ContactSection() {
             <MiniBrick color="#444444" />
           </div>
 
-          <form onSubmit={handleSubmit} className="p-6 flex flex-col gap-5">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              form.handleSubmit();
+            }}
+            className="p-6 flex flex-col gap-5"
+            noValidate
+          >
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-              <div className="flex flex-col gap-2">
-                <label
-                  htmlFor="name"
-                  className="font-mono text-[0.7rem] tracking-[0.08em] uppercase"
-                  style={{ color: "var(--text-muted)" }}
-                >
-                  Nombre
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  required
-                  className="w-full rounded px-4 py-3 font-mono text-[0.875rem] outline-none transition-all duration-200 focus:ring-2 focus:ring-[#e8a838]"
-                  style={{
-                    background: "var(--bg-elevated)",
-                    border: "1px solid var(--border)",
-                    color: "var(--text-primary)",
-                  }}
-                  placeholder="Tu nombre"
-                />
-              </div>
-
-              <div className="flex flex-col gap-2">
-                <label
-                  htmlFor="email"
-                  className="font-mono text-[0.7rem] tracking-[0.08em] uppercase"
-                  style={{ color: "var(--text-muted)" }}
-                >
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  required
-                  className="w-full rounded px-4 py-3 font-mono text-[0.875rem] outline-none transition-all duration-200 focus:ring-2 focus:ring-[#e8a838]"
-                  style={{
-                    background: "var(--bg-elevated)",
-                    border: "1px solid var(--border)",
-                    color: "var(--text-primary)",
-                  }}
-                  placeholder="tu@email.com"
-                />
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-2">
-              <label
-                htmlFor="message"
-                className="font-mono text-[0.7rem] tracking-[0.08em] uppercase"
-                style={{ color: "var(--text-muted)" }}
-              >
-                Mensaje
-              </label>
-              <textarea
-                id="message"
-                value={formData.message}
-                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                required
-                rows={5}
-                className="w-full resize-none rounded px-4 py-3 font-mono text-[0.875rem] outline-none transition-all duration-200 focus:ring-2 focus:ring-[#e8a838]"
-                style={{
-                  background: "var(--bg-elevated)",
-                  border: "1px solid var(--border)",
-                  color: "var(--text-primary)",
+              <form.Field
+                name="name"
+                validators={{
+                  onChange: ({ value }) => {
+                    const result = contactSchema.shape.name.safeParse(value);
+                    return result.success ? undefined : result.error.issues[0]?.message;
+                  },
+                  onBlur: ({ value }) => {
+                    const result = contactSchema.shape.name.safeParse(value);
+                    return result.success ? undefined : result.error.issues[0]?.message;
+                  },
                 }}
-                placeholder="Cuéntame un poco sobre tu idea o mensaje..."
-              />
+              >
+                {(field) => {
+                  const error = getFieldError(field.state.meta);
+
+                  return (
+                    <div className="flex flex-col gap-2">
+                      <label
+                        htmlFor={field.name}
+                        className="font-mono text-[0.7rem] tracking-[0.08em] uppercase"
+                        style={{ color: "var(--text-muted)" }}
+                      >
+                        Nombre
+                      </label>
+
+                      <input
+                        type="text"
+                        id={field.name}
+                        name={field.name}
+                        value={field.state.value}
+                        onChange={(e) => field.handleChange(e.target.value)}
+                        onBlur={field.handleBlur}
+                        className="w-full rounded px-4 py-3 font-mono text-[0.875rem] outline-none transition-all duration-200"
+                        style={{
+                          background: "var(--bg-elevated)",
+                          border: `1px solid ${error ? "#c94b37" : "var(--border)"}`,
+                          color: "var(--text-primary)",
+                          boxShadow: error ? "0 0 0 2px rgba(201,75,55,0.12)" : "none",
+                        }}
+                        placeholder="Tu nombre"
+                        aria-invalid={!!error}
+                        aria-describedby={error ? `${field.name}-error` : undefined}
+                      />
+
+                      {error && (
+                        <p
+                          id={`${field.name}-error`}
+                          className="text-[0.78rem]"
+                          style={{ color: "#c94b37" }}
+                        >
+                          {error}
+                        </p>
+                      )}
+                    </div>
+                  );
+                }}
+              </form.Field>
+
+              <form.Field
+                name="email"
+                validators={{
+                  onChange: ({ value }) => {
+                    const result = contactSchema.shape.email.safeParse(value);
+                    return result.success ? undefined : result.error.issues[0]?.message;
+                  },
+                  onBlur: ({ value }) => {
+                    const result = contactSchema.shape.email.safeParse(value);
+                    return result.success ? undefined : result.error.issues[0]?.message;
+                  },
+                }}
+              >
+                {(field) => {
+                  const error = getFieldError(field.state.meta);
+
+                  return (
+                    <div className="flex flex-col gap-2">
+                      <label
+                        htmlFor={field.name}
+                        className="font-mono text-[0.7rem] tracking-[0.08em] uppercase"
+                        style={{ color: "var(--text-muted)" }}
+                      >
+                        Email
+                      </label>
+
+                      <input
+                        type="email"
+                        id={field.name}
+                        name={field.name}
+                        value={field.state.value}
+                        onChange={(e) => field.handleChange(e.target.value)}
+                        onBlur={field.handleBlur}
+                        className="w-full rounded px-4 py-3 font-mono text-[0.875rem] outline-none transition-all duration-200"
+                        style={{
+                          background: "var(--bg-elevated)",
+                          border: `1px solid ${error ? "#c94b37" : "var(--border)"}`,
+                          color: "var(--text-primary)",
+                          boxShadow: error ? "0 0 0 2px rgba(201,75,55,0.12)" : "none",
+                        }}
+                        placeholder="tu@email.com"
+                        aria-invalid={!!error}
+                        aria-describedby={error ? `${field.name}-error` : undefined}
+                      />
+
+                      {error && (
+                        <p
+                          id={`${field.name}-error`}
+                          className="text-[0.78rem]"
+                          style={{ color: "#c94b37" }}
+                        >
+                          {error}
+                        </p>
+                      )}
+                    </div>
+                  );
+                }}
+              </form.Field>
             </div>
+
+            <form.Field
+              name="message"
+              validators={{
+                onChange: ({ value }) => {
+                  const result = contactSchema.shape.message.safeParse(value);
+                  return result.success ? undefined : result.error.issues[0]?.message;
+                },
+                onBlur: ({ value }) => {
+                  const result = contactSchema.shape.message.safeParse(value);
+                  return result.success ? undefined : result.error.issues[0]?.message;
+                },
+              }}
+            >
+              {(field) => {
+                const error = getFieldError(field.state.meta);
+
+                return (
+                  <div className="flex flex-col gap-2">
+                    <label
+                      htmlFor={field.name}
+                      className="font-mono text-[0.7rem] tracking-[0.08em] uppercase"
+                      style={{ color: "var(--text-muted)" }}
+                    >
+                      Mensaje
+                    </label>
+
+                    <textarea
+                      id={field.name}
+                      name={field.name}
+                      value={field.state.value}
+                      onChange={(e) => field.handleChange(e.target.value)}
+                      onBlur={field.handleBlur}
+                      rows={5}
+                      className="w-full resize-none rounded px-4 py-3 font-mono text-[0.875rem] outline-none transition-all duration-200"
+                      style={{
+                        background: "var(--bg-elevated)",
+                        border: `1px solid ${error ? "#c94b37" : "var(--border)"}`,
+                        color: "var(--text-primary)",
+                        boxShadow: error ? "0 0 0 2px rgba(201,75,55,0.12)" : "none",
+                      }}
+                      placeholder="Cuéntame un poco sobre tu idea o mensaje..."
+                      aria-invalid={!!error}
+                      aria-describedby={error ? `${field.name}-error` : undefined}
+                    />
+
+                    {error && (
+                      <p
+                        id={`${field.name}-error`}
+                        className="text-[0.78rem]"
+                        style={{ color: "#c94b37" }}
+                      >
+                        {error}
+                      </p>
+                    )}
+                  </div>
+                );
+              }}
+            </form.Field>
 
             <div className="flex flex-wrap items-center gap-4 pt-1">
-              <button
-                type="submit"
-                disabled={status === "sending"}
-                className="inline-flex items-center justify-center gap-2 rounded px-6 py-3 font-mono text-[0.85rem] font-bold uppercase tracking-[0.04em] text-[#1a1200] transition-all duration-150 hover:-translate-y-[2px] active:translate-y-[2px] disabled:opacity-60"
-                style={{ background: "#e8a838", boxShadow: "0 4px 0 #8a5e00" }}
+              <form.Subscribe
+                selector={(state) => [state.canSubmit, state.isSubmitting] as const}
               >
-                {status === "sending" ? (
-                  "Enviando..."
-                ) : status === "sent" ? (
-                  "Enviado"
-                ) : (
-                  <>
-                    Enviar mensaje
-                    <IconSend />
-                  </>
+                {([canSubmit, isSubmitting]) => (
+                  <button
+                    type="submit"
+                    disabled={!canSubmit || isSubmitting || status === "sending"}
+                    className="inline-flex items-center justify-center gap-2 rounded px-6 py-3 font-mono text-[0.85rem] font-bold uppercase tracking-[0.04em] text-[#1a1200] transition-all duration-150 hover:-translate-y-[2px] active:translate-y-[2px] disabled:opacity-60"
+                    style={{ background: "#e8a838", boxShadow: "0 4px 0 #8a5e00" }}
+                  >
+                    {status === "sending" || isSubmitting ? (
+                      "Enviando..."
+                    ) : status === "sent" ? (
+                      "Enviado"
+                    ) : (
+                      <>
+                        Enviar mensaje
+                        <IconSend />
+                      </>
+                    )}
+                  </button>
                 )}
-              </button>
+              </form.Subscribe>
 
               {status === "sent" && (
                 <p className="font-mono text-[0.8rem]" style={{ color: "#27ae60" }}>
                   Mensaje enviado correctamente.
+                </p>
+              )}
+
+              {status === "error" && (
+                <p className="font-mono text-[0.8rem]" style={{ color: "#c94b37" }}>
+                  No se pudo enviar el mensaje.
                 </p>
               )}
             </div>
