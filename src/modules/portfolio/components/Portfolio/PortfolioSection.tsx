@@ -81,18 +81,15 @@ function ProjectCard({
   const extraLinks = links.slice(1);
 
   return (
-    <a
-      href={primaryLink?.href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="group relative flex h-full flex-col overflow-hidden rounded-[26px] no-underline transition-all duration-300 hover:-translate-y-[4px]"
-      style={{
-        background:
-          "linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015))",
-        border: "1px solid var(--border)",
-        boxShadow: "var(--card-shadow)",
-      }}
-    >
+    <article
+  className="group relative flex h-full flex-col overflow-hidden rounded-[26px] transition-all duration-300 hover:-translate-y-[4px]"
+  style={{
+    background:
+      "linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015))",
+    border: "1px solid var(--border)",
+    boxShadow: "var(--card-shadow)",
+  }}
+>
       <div
         className="absolute inset-x-0 top-0 h-[3px]"
         style={{ background: `linear-gradient(to right, ${accentColor}, transparent)` }}
@@ -105,8 +102,11 @@ function ProjectCard({
 
         <div className="flex items-center gap-2">
           {primaryLink && (
-            <span
-              className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-[4px] font-mono text-[0.62rem] uppercase tracking-[0.08em]"
+            <a
+              href={primaryLink.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-[4px] font-mono text-[0.62rem] uppercase tracking-[0.08em] no-underline transition-transform duration-150 hover:-translate-y-[1px]"
               style={{
                 background: `${accentColor}18`,
                 border: `1px solid ${accentColor}38`,
@@ -115,30 +115,33 @@ function ProjectCard({
             >
               {primaryLink.label.toLowerCase().includes("web") ? <IconExternal /> : <IconGithub />}
               Abrir
-            </span>
+            </a>
           )}
         </div>
       </div>
 
       {/* Imagen */}
-      {image && (
-        <div className="px-5 pb-0 pt-4 sm:px-6">
-          <div
-            className="overflow-hidden rounded-[20px]"
-            style={{
-              border: "1px solid var(--border)",
-              boxShadow: "0 6px 20px rgba(0,0,0,0.14)",
-              background: "var(--bg-elevated)",
-            }}
-          >
-            <img
-              src={image}
-              alt={title}
-              className="h-[210px] w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-            />
-          </div>
-        </div>
-      )}
+            {image && primaryLink && (
+              <div className="px-5 pb-0 pt-4 sm:px-6">
+                <a
+                  href={primaryLink.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block overflow-hidden rounded-[20px]"
+                  style={{
+                    border: "1px solid var(--border)",
+                    boxShadow: "0 6px 20px rgba(0,0,0,0.14)",
+                    background: "var(--bg-elevated)",
+                  }}
+                >
+                  <img
+                    src={image}
+                    alt={title}
+                    className="h-[210px] w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                  />
+                </a>
+              </div>
+            )}
 
       {/* Contenido */}
       <div className="flex flex-1 flex-col px-5 pb-5 pt-5 sm:px-6">
@@ -232,7 +235,7 @@ function ProjectCard({
       </div>
 
       <div className="h-[3px]" style={{ background: "rgba(0,0,0,0.14)" }} />
-    </a>
+    </article>
   );
 }
 
