@@ -2,31 +2,31 @@ import type { Project } from "../../../shared/types/project";
 
 export const projects: Project[] = [
   {
-  id: "p-ganaderos",
-  title: "Cámara de Ganaderos",
-  shortDescription:
-    "Sistema web informativo y administrativo desarrollado para digitalizar procesos internos, gestión presupuestaria y control de información administrativa mediante una arquitectura full stack.",
-  technologies: ["React", "Node.js", "MySQL", "APIs REST"],
-  image: "/Images/projects/camara-ganaderos.jpg",
-  links: [
-    {
-      label: "Sitio web",
-      href: "https://www.camaraganaderoshojancha.cloud/",
-    },
-    {
-      label: "Informativo Frontend",
-      href: "https://github.com/GreilynES/CamaraDeGanaderos_Informative_App_Front.git",
-    },
-    {
-      label: "Administrativo Frontend",
-      href: "https://github.com/GreilynES/CamaraDeGanaderos_Administrative_App_Front.git",
-    },
-    {
-      label: "Backend",
-      href: "https://github.com/GreilynES/CamaraDeGanaderos_App_Backend.git",
-    },
-  ],
-},
+    id: "p-ganaderos",
+    title: "Cámara de Ganaderos",
+    shortDescription:
+      "Sistema web informativo y administrativo desarrollado para digitalizar procesos internos, gestión presupuestaria y control de información administrativa mediante una arquitectura full stack.",
+    technologies: ["React", "Node.js", "MySQL", "APIs REST"],
+    image: "/Images/projects/camara-ganaderos.jpg",
+    links: [
+      {
+        label: "Sitio web",
+        href: "https://www.camaraganaderoshojancha.cloud/",
+      },
+      {
+        label: "Informativo Frontend",
+        href: "https://github.com/GreilynES/CamaraDeGanaderos_Informative_App_Front.git",
+      },
+      {
+        label: "Administrativo Frontend",
+        href: "https://github.com/GreilynES/CamaraDeGanaderos_Administrative_App_Front.git",
+      },
+      {
+        label: "Backend",
+        href: "https://github.com/GreilynES/CamaraDeGanaderos_App_Backend.git",
+      },
+    ],
+  },
   {
     id: "p-municipal",
     title: "Sistema de Gestión Municipal",
@@ -64,6 +64,24 @@ export const projects: Project[] = [
       {
         label: "Backend",
         href: "https://github.com/GreilynES/StroopGame-Back.git",
+      },
+    ],
+  },
+  {
+    id: "p-recomendador-ia",
+    title: "Recomendador de Películas y Libros con IA",
+    shortDescription:
+      "Aplicación web interactiva que utiliza Inteligencia Artificial para recomendar libros y películas personalizadas. Analiza las preferencias de géneros, temas y descripciones del usuario para generar sugerencias precisas.",
+    technologies: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Inteligencia Artificial"],
+    image: "/Images/projects/recomendador-ia.png",
+    links: [
+      {
+        label: "Sitio web",
+        href: "https://recomendador-ia-peliculas-libros.vercel.app/",
+      },
+      {
+        label: "GitHub",
+        href: "https://github.com/GreilynES/Recomendador-IA-Peliculas-Libros.git",
       },
     ],
   },
