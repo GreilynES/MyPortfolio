@@ -203,21 +203,29 @@ export default function ContactSection() {
       try {
         setStatus("sending");
 
-        const subject = encodeURIComponent(
-          `Mensaje desde el portafolio de ${value.name}`
-        );
+        const targetEmail = emailSocial?.href.replace("mailto:", "").trim() || "greilynesquivel@gmail.com";
 
-        const body = encodeURIComponent(
-    `Nombre: ${value.name}
-    Email: ${value.email}
+        const payload = {
+          name: value.name,
+          email: value.email,
+          message: value.message,
+          _subject: `Mensaje desde el portafolio de ${value.name}`,
+          _captcha: "false",
+          _honey: "",
+        };
 
-    Mensaje:
-    ${value.message}`
-        );
+        const response = await fetch(`https://formsubmit.co/ajax/${targetEmail}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+          },
+          body: JSON.stringify(payload),
+        });
 
-        const mailtoLink = `mailto:greilynesquivel@gmail.com?subject=${subject}&body=${body}`;
-
-        window.location.href = mailtoLink;
+        if (!response.ok) {
+          throw new Error("Failed to send email");
+        }
 
         form.reset();
         setStatus("sent");
