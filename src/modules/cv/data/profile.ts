@@ -41,6 +41,6 @@ export const profile: Profile = {
   stats: [
     { value: "3+",  label: "Años aprendiendo" },
     { value: "10+", label: "Tecnologías"       },
-    { value: "⬇", label: "Descargar CV", href: "/cv_greilyn_esquivel_salazar-cv.pdf" }
+    { value: "⬇", label: "Descargar CV", href: "/CV_Greilyn_Esquivel_Salazar-EN.pdf" }
   ],
 };
